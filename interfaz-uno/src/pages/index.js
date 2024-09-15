@@ -1,0 +1,6 @@
+export * from "./Dashboard"
+export * from "./Guardados"
+export * from "./Home"
+export * from "./InicioSesion"
+export * from "./RegistroUsuario"
+export * from "./Renta"
