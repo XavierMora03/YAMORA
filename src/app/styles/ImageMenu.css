@@ -1,0 +1,11 @@
+/* ImageMenu.css */
+.OpcionesMenu {
+    padding: 0.5rem 1rem; /* px-2 py-1 */
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.OpcionesMenu:hover {
+    background-color: #6366f1; /* hover:bg-indigo-500 */
+    color: white; /* hover:text-white */
+}

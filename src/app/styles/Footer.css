@@ -1,0 +1,19 @@
+/* Footer.css */
+.TituloFooter {
+    font-family: title-font;
+    font-weight: 500; /* medium */
+    color: #1f2937; /* text-gray-900 */
+    letter-spacing: 0.1em; /* tracking-widest */
+    font-size: 0.875rem; /* text-sm */
+    margin-bottom: 0.75rem; /* mb-3 */
+}
+
+.DividirFooter {
+    width: 25%; /* lg:w-1/4 */
+    padding: 0 1rem; /* px-4 */
+}
+
+.AmpliarInterlineadoLista {
+    line-height: 1.75rem; /* leading-7 */
+    color: black; /* text-black */
+}

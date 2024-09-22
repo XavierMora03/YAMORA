@@ -1,0 +1,12 @@
+/* NAVBAR.css */
+.BtnLink {
+    display: inline-block;
+    padding: 0.25rem 0; /* py-1 */
+    color: black; /* text-black */
+    margin-right: 1rem; /* mr-4 */
+    transition: color 0.2s ease-in-out;
+}
+
+.BtnLink:hover {
+    color: var(--accent); /* hover:text-accent */
+}

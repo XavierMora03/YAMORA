@@ -1,0 +1,34 @@
+/* Bloques.css */
+.TituloBloques {
+    font-family: title-font;
+    font-size: 1.25rem; /* sm:text-2xl equivalente a 1.25rem */
+    text-align: center;
+    font-weight: 500; /* medium */
+    color: #1f2937; /* text-gray-900 */
+    margin-bottom: 0.75rem; /* mb-3 */
+}
+
+.EstiloCuadro {
+    height: 100%;
+    background-color: rgba(243, 244, 246, 0.75); /* bg-gray-100 bg-opacity-75 */
+    padding: 4rem 1.5rem 6rem; /* px-6 pt-16 pb-24 */
+    border-radius: 0.5rem; /* rounded-lg */
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+}
+
+.VerDetalles {
+    color: #6366f1; /* text-indigo-500 */
+    display: inline-flex;
+    align-items: center;
+}
+
+.SepararCuadros {
+    padding: 1rem; /* p-4 */
+    width: 33.333%; /* lg:w-1/3 */
+}
+
+.ImagenCompleta {
+    width: 100%; /* w-full */
+}
