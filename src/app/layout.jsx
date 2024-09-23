@@ -1,5 +1,5 @@
 "use client";
-
+import './globals.css'
 // export const metadata = {
 //   title: "Rentas Yamora",
 //   description: "Esta es la pagina principal de mi proyecto",
@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Rentas Yamora</title>
       </head>
-      <body>
+      <body className="fondo">
         {children}
       </body>
     </html>

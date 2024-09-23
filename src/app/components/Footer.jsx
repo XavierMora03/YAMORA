@@ -1,7 +1,7 @@
 "use client";
 
 
-import '../styles/globals.css';
+import '../globals.css';
 // import { TituloFooter, DividirFooter, AmpliarInterlineadoLista } from "./Variables"
 import Derechos from "./Derechos"
 import Link from 'next/link';

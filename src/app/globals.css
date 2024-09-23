@@ -25,9 +25,11 @@ body {
     text-wrap: balance;
   }
 } */
- 
-body {
-  background-image: url("/images/kanao.jpg");
+
+.fondo {
+  background-image: url("/images/hola.jpeg");
+  background-repeat: no-repeat;
+  background-size:cover;
 }
 
 /* Bloques.css */
@@ -83,7 +85,7 @@ body {
   font-weight: 500; /* medium */
   color: #1f2937; /* text-gray-900 */
   letter-spacing: 0.1em; /* tracking-widest */
-  font-size: 0.875rem; /* text-sm */
+  font-size: medium; /* text-sm */
   margin-bottom: 0.75rem; /* mb-3 */
 }
 
@@ -127,8 +129,9 @@ body {
   display: inline-block;
   padding: 0.25rem 0; /* py-1 */
   color: black; /* text-black */
-  margin-right: 1rem; /* mr-4 */
+  margin-right: 0.7rem; /* mr-4 */
   transition: color 0.2s ease-in-out;
+  font-size: large;
 }
 
 .BtnLink:hover {
@@ -175,4 +178,11 @@ body {
   padding: 0.75rem; /* py-3 */
   color: black;
   margin: 1rem 0; /* mt-3 mb-4 */
+}
+
+.MensajeRequerido {
+  color: red;
+  font-size: small;
+  font-style: italic;
+  font-weight: bold;
 }

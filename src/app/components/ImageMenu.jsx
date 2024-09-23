@@ -1,5 +1,5 @@
 "use client";
-import '../styles/globals.css';
+import '../globals.css';
 import { useState } from "react";
 import Link from 'next/link';
 
@@ -22,12 +22,12 @@ function ImageMenu() {
                 <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg">
                     <ul className="py-1">
                         <li className="OpcionesMenu">
-                            <Link href='/sesion'>
+                            <Link href='/auth/sesion'>
                                 <p className="px-4 py-2 hover:bg-gray-100">Iniciar Sesión</p>
                             </Link>
                         </li>
                         <li className="OpcionesMenu">
-                            <Link href='/registro'>
+                            <Link href='/auth/registro'>
                                 <p className="px-4 py-2 hover:bg-gray-100">Registrarse</p>
                             </Link>
                         </li>

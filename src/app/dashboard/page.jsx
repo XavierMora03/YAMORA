@@ -1,5 +1,5 @@
 import { EstiloElementosLaterales } from "../components/Variables"
-import '../styles/globals.css';
+import '../globals.css';
 import Derechos from "../components/Derechos"
 import ImageMenu from "../components/ImageMenu";
 import Link from "next/link";

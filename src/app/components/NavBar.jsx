@@ -1,15 +1,15 @@
 
 import ImageMenu from "./ImageMenu"
 import { BtnLink } from "./Variables"
-import '../styles/globals.css';
+import '../globals.css';
 import Link from "next/link";
 
 function NavBar() {
     return (
         <>
-            <header className="text-gray-600 body-font">
+            <header className="text-black body-font">
                 <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-                    <div className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+                    <div className="flex title-font font-medium items-center text-black mb-4 md:mb-0">
                         <Link href="/">
                             <img src="/images/casaicono.jpeg" alt="Icono_de_la_pagina" className="w-10 h-10 rounded-full" />
                         </Link>
