@@ -6,8 +6,8 @@
 function Guardados() {
   return (
     <>
-    // <CuadroBusqueda/>
-    // <Footer/>
+    {/* <CuadroBusqueda/>
+    <Footer/> */}
     </>
   )
 }
