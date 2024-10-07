@@ -21,8 +21,14 @@ function Registro() {
         //     return alert("Las contraseñas no coinciden")
         // }
 
+        console.log("gola: ", data)
+
         const res = await fetch('/api/auth/register', {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             body: JSON.stringify(
                 {
                     nombre: data.nombre,
@@ -37,9 +43,6 @@ function Registro() {
 
                 }
         ),
-            headers: {
-                'Content-Type': 'application/json'
-            }
         })
 
         const resJSON = await res.json()
