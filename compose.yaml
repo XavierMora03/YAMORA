@@ -1,0 +1,12 @@
+volumes:
+  psql:
+services:
+  psql:
+    image: postgres:17.0
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+    volumes:
+      - ./load_db.sql:/docker-entrypoint-initdb.d/load_db.sql
+    ports:
+      - 5555:5432
