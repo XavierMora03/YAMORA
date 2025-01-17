@@ -1,24 +1,13 @@
-'use client';
-import { SearchParamsContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
-import { useParams, useRouter, useSearchParams, 
-  usePathname
- } from "next/navigation"
+import connectDB from "@/config/database"; 
+import Property from "@/models/Property";
+import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 
-const PropertyAddPage = () => {
-  const router = useRouter();
-  console.log('sis')
-  const {id} = useParams();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-
-  const name = searchParams.get('name')
-  return (
-    <div>
-      <button onClick={ ()=> router.push('/')} className="bg-blue-400">
-        Página Principal {id} {name} {pathname}
-        </button>
-    </div>
-  )
+const PropertyPage = async ({params}) => {
+    await connectDB();
+    const property = await Property.findById(params.id).lean();
+    return ( <section>
+        {property.name}
+    </section> );
 }
-
-export default PropertyAddPage
+ 
+export default PropertyPage;

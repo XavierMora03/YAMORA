@@ -1,26 +1,23 @@
-import React from 'react'
-import '@/assets/styles/globals.css'
-import HomePage from './page'
-import Navbar from '@/components/Navbar'
-//import HomePage from './page'
+import Navbar from '@/components/Navbar';
+import '@/assets/styles/globals.css';
+import Footer from '@/components/Footer';
+
 export const metadata = {
-    title: 'PropertyPulse | Find the perfect rental',
-    description: 'Find your dream rental property',
-    keywords: 'rental, find rentals, find properties',
-    equisde: 'rental, find rentals, find properties',
+    title: 'Rentas YAMORA',
+    keywords: 'rental, property, real-state',
+    description: 'Find the perfect House'
 }
 
-
-const MainLayout = ( {children} ) => {
-  return (
-    <html lang='en'>
-    <body>
+const MainLayout = ({children}) => {
+    return (
+        <html>
+            <body>
             <Navbar/>
-            {children}
-          
-    </body>
-    </html>
-  )
-}
+            <main>{children}</main> 
+            <Footer/>
+            </body>
+        </html>
+    );
+};
 
-export default MainLayout
+export default MainLayout;
