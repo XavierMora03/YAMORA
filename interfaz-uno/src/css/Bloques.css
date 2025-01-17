@@ -1,9 +1,0 @@
-/* export const TituloBloques = "title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3 text-center" //Define el estilo del titulo de los cuadros "Casa de pepe"
-
-export const EstiloCuadro = "h-full bg-gray-100 bg-opacity-75 px-6 pt-16 pb-24 rounded-lg overflow-hidden text-center relative" //Define el estilo del cuadro donde irá la información de las casas
-
-export const VerDetalles = "text-indigo-500 inline-flex items-center" //Define el estilo de ver más detalles
-
-export const SepararCuadros = "p-4 lg:w-1/3" //Sirve para que definir cuantos cuadros van en una misma linea
-
-export const ImagenCompleta = "w-full" //Hacen que las imagenes abarquen todo el ancho del cuadro */
