@@ -7,22 +7,22 @@ const PropertyCard = ({property}) => {
     const getRateDisplay = () =>{
         const{rates} = property;
         if (rates.monthly){
-          return `$${rates.monthly.toLocaleString()}/mo`; 
+          return `$${rates.monthly.toLocaleString()}/mes`; 
         } else if(rates.weekly){
-            return `$${rates.weekly.toLocaleString()}/wk`; 
+            return `$${rates.weekly.toLocaleString()}/semana`; 
         } else if(rates.nightly){
-            return `$${rates.nightly.toLocaleString()}/night`; 
+            return `$${rates.nightly.toLocaleString()}/noche`; 
         }
     }
 
     return (<div className="rounded-xl shadow-md relative">
         <Image
-          src= {`/images/properties/${property.images[0]}`}
+          src={`/images/properties/${property.images[0]}`}
           alt=""
-          width='0'
-          height='0'
-          sizes='100vw'
-          className="w-full h-auto rounded-t-xl"
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="w-full h-[250px] object-cover rounded-t-xl"
         />
         <div className="p-4">
           <div className="text-left md:text-center lg:text-left mb-6">
@@ -38,24 +38,24 @@ const PropertyCard = ({property}) => {
           <div className="flex justify-center gap-4 text-gray-500 mb-4">
             <p>
               <i className="fa-solid fa-bed"></i> <FaBed className="md:hidden lg:inline"/>{' '}{property.beds}{' '}
-              <span className="md:hidden lg:inline">Beds</span>
+              <span className="md:hidden lg:inline">Cuartos</span>
             </p>
             <p>
               <FaBath className="md:hidden lg:inline"/>{' '}{property.baths}{' '}
-              <span className="md:hidden lg:inline">Baths</span>
+              <span className="md:hidden lg:inline">Baños</span>
             </p>
             <p>
             <FaRulerCombined className="md:hidden lg:inline"/>
-              {' '}{property.square_feet} <span className="md:hidden lg:inline">sqft</span>
+              {' '}{property.square_feet} <span className="md:hidden lg:inline">mt2</span>
             </p>
           </div>
 
-          <div
+          {/* <div
             className="flex justify-center gap-4 text-green-900 text-sm mb-4"
           >
             <p><FaMoneyBill className="md:hidden lg:inline"/>{' '} Mensual</p>
             <p><FaMoneyBill className="md:hidden lg:inline"/>{' '} Anual</p>
-          </div>
+          </div> */}
 
           <div className="border border-gray-100 mb-5"></div>
 
@@ -68,7 +68,7 @@ const PropertyCard = ({property}) => {
               href={`/properties/${property._id}`}
               className="h-[36px] bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-center text-sm"
             >
-              Details
+              Detalles
             </Link>
           </div>
         </div>

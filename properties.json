@@ -3,7 +3,7 @@
     "_id": "1",
     "owner": "1",
     "name": "Habitación en Guadalajara, México",
-    "type": "Apartment",
+    "type": "Habitación",
     "description": "Disfruta de la tranquilidad de este alojamiento céntrico en la bella Guadalajara.Muy cerca se encuentra la línea 2 y 3 del tren ligero. Estamos a unos pasos de la zona comercial de Obregón, el mercado San Juan de Dios, la zona del vestir de Medrano, La Plaza Tapatía, Centro medico de occidente, etc.",
     "location": {
       "street": "120 Tremont Street",
@@ -11,9 +11,9 @@
       "state": "Jal",
       "zipcode": "44360"
     },
-    "beds": 2,
+    "beds": 1,
     "baths": 1,
-    "square_feet": 1500,
+    "square_feet": 9,
     "amenities": [
       "Wifi",
       "Full kitchen",
@@ -92,17 +92,17 @@
     "_id": "3",
     "owner": "2",
     "name": "Departamento en providencia",
-    "type": "Condo",
+    "type": "Departamento",
     "description": "Providencia, Una Recámara, Cochera, Super Ubicado, Vive en La Mejor Zona ",
     "location": {
       "street": "Mantenimiento MN 200 ",
-      "city": "Los Angeles",
-      "state": "CA",
+      "city": "Zapopan",
+      "state": "JAL",
       "zipcode": "44630"
     },
     "beds": 3,
     "baths": 2,
-    "square_feet": 2200,
+    "square_feet": 76,
     "amenities": [
       "Wifi",
       "Full kitchen",
@@ -170,17 +170,17 @@
     "_id": "5",
     "owner": "3",
     "name": "Nomad Pablo Neruda Renta Sin Aval ",
-    "type": "Studio",
+    "type": "Departamento",
     "description": "Stay in style in this modern downtown studio apartment.",
     "location": {
       "street": "Edificio residencial ubicado en Providencia Guadalajara, Av. Pablo Neruda. Acceso vehicular por Calle Bogotá, drop off y acceso peatonal por Av. Pablo Neruda. ",
-      "city": "Chicago",
-      "state": "IL",
+      "city": "Guadalajara",
+      "state": "JAL",
       "zipcode": "60601"
     },
     "beds": 1,
     "baths": 1,
-    "square_feet": 900,
+    "square_feet": 41,
     "amenities": [
       "High-Speed Internet",
       "Smart TV",
@@ -205,7 +205,7 @@
     "_id": "6",
     "owner": "3",
     "name": "Renta Departamento Guadalajara",
-    "type": "Apartment",
+    "type": "Departamento",
     "description": "Se renta departamento de dos habitaciones en Guadalajara ,se encuentran totalmente amueblados con todos los servicios incluidos: luz, agua, Internet, gas.",
     "location": {
       "street": "Fray Antonio de Segovia 1261",
@@ -240,17 +240,17 @@
     "_id": "7",
     "owner": "4",
     "name": "Casa en Renta en Bosques de Santa Anita ",
-    "type": "Cottage Or Cabin",
+    "type": "Casa",
     "description": "cto peña de tapala , Bosques de Santa Anita, Tlajomulco de Zúñiga",
     "location": {
       "street": "cto peña de tapala",
-      "city": "Denver",
-      "state": "CO",
+      "city": "Tlajomulco",
+      "state": "JAL",
       "zipcode": "45656"
     },
     "beds": 2,
     "baths": 1,
-    "square_feet": 1100,
+    "square_feet": 95,
     "amenities": [
       "Fireplace",
       "Outdoor Grill/BBQ",
@@ -274,7 +274,7 @@
     "_id": "8",
     "owner": "5",
     "name": "Renta Departamento Individual Guadalajara Cucs Centro Medico de Occidente Cucei",
-    "type": "Apartment",
+    "type": "Departamento",
     "description": "Se renta departamento tipo Estudio para una o dos personas, totalmente amueblados con los servicios incluidos.",
     "location": {
       "street": "Calle Francisco de Ayza 246",
@@ -308,17 +308,17 @@
     "_id": "9",
     "owner": "6",
     "name": "Casa en Renta Bugambilias, Zona Sur, Zapopan, Jalisco ",
-    "type": "House",
+    "type": "Casa",
     "description": "AV. GUADALUPE , Fraccionamiento Bugambilias",
     "location": {
       "street": "AV. GUADALUPE , Fraccionamiento Bugambilias",
-      "city": "Boulder",
-      "state": "CO",
+      "city": "Zapopan",
+      "state": "JAL",
       "zipcode": "80301"
     },
     "beds": 4,
     "baths": 3,
-    "square_feet": 2400,
+    "square_feet": 200,
     "amenities": [
       "Mountain View",
       "Hiking Trails Access",
@@ -343,7 +343,7 @@
     "_id": "10",
     "owner": "7",
     "name": "Dpto Renta Torre Aira Country Club Dpto Renta",
-    "type": "Apartment",
+    "type": "Departamento",
     "description": "Excelente departamento (piso 12) con espectacular vista al campo de golf, Basílica, Los Charros, Punto Sao Paulo, Andares.",
     "location": {
       "street": "MAR TIRRENO 2118",
