@@ -2,6 +2,7 @@
   {
     "_id": "1",
     "owner": "1",
+<<<<<<< Updated upstream
     "name": "Boston Commons Retreat",
     "type": "Departamento",
     "description": "This is a beautiful apartment located near the commons. It is a 2 bedroom apartment with a full kitchen and bathroom. It is available for weekly or monthly rentals.",
@@ -10,6 +11,16 @@
       "city": "Guadalajara",
       "state": "JAL",
       "zipcode": "02108"
+=======
+    "name": "Habitación en Guadalajara, México",
+    "type": "Apartment",
+    "description": "Disfruta de la tranquilidad de este alojamiento céntrico en la bella Guadalajara.Muy cerca se encuentra la línea 2 y 3 del tren ligero. Estamos a unos pasos de la zona comercial de Obregón, el mercado San Juan de Dios, la zona del vestir de Medrano, La Plaza Tapatía, Centro medico de occidente, etc.",
+    "location": {
+      "street": "120 Tremont Street",
+      "city": "Guadalajara",
+      "state": "Jal",
+      "zipcode": "44360"
+>>>>>>> Stashed changes
     },
     "beds": 2,
     "baths": 1,
@@ -31,8 +42,8 @@
       "Coffee Maker"
     ],
     "rates": {
-      "weekly": 1100,
-      "monthly": 4200
+      "weekly": 3400,
+      "monthly": 12000
     },
     "seller_info": {
       "name": "John Doe",
@@ -91,14 +102,21 @@
   {
     "_id": "3",
     "owner": "2",
-    "name": "Luxury Condo with a View",
+    "name": "Departamento en providencia",
     "type": "Condo",
-    "description": "Experience luxury in this stunning condo with breathtaking views.",
+    "description": "Providencia, Una Recámara, Cochera, Super Ubicado, Vive en La Mejor Zona ",
     "location": {
+<<<<<<< Updated upstream
       "street": "500 Lux Lane",
       "city": "Guadalajara",
       "state": "JAL",
       "zipcode": "90001"
+=======
+      "street": "Mantenimiento MN 200 ",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zipcode": "44630"
+>>>>>>> Stashed changes
     },
     "beds": 3,
     "baths": 2,
@@ -120,9 +138,7 @@
       "Coffee Maker"
     ],
     "rates": {
-      "nightly": 200,
-      "weekly": 750,
-      "monthly": 3300
+      "monthly": 8000
     },
     "seller_info": {
       "name": "David Johnson",
@@ -171,13 +187,19 @@
   {
     "_id": "5",
     "owner": "3",
-    "name": "Modern Downtown Studio",
+    "name": "Nomad Pablo Neruda Renta Sin Aval ",
     "type": "Studio",
     "description": "Stay in style in this modern downtown studio apartment.",
     "location": {
+<<<<<<< Updated upstream
       "street": "75 Urban Avenue",
       "city": "Guadalajara",
       "state": "JAL",
+=======
+      "street": "Edificio residencial ubicado en Providencia Guadalajara, Av. Pablo Neruda. Acceso vehicular por Calle Bogotá, drop off y acceso peatonal por Av. Pablo Neruda. ",
+      "city": "Chicago",
+      "state": "IL",
+>>>>>>> Stashed changes
       "zipcode": "60601"
     },
     "beds": 1,
@@ -191,8 +213,7 @@
       "Outdoor Grill/BBQ"
     ],
     "rates": {
-      "weekly": 1100,
-      "monthly": 4200
+      "monthly": 15400
     },
     "seller_info": {
       "name": "Michael Brown",
@@ -242,14 +263,21 @@
   {
     "_id": "7",
     "owner": "4",
-    "name": "Rustic Cabin in the Woods",
+    "name": "Casa en Renta en Bosques de Santa Anita ",
     "type": "Cottage Or Cabin",
-    "description": "Experience nature in this cozy rustic cabin.",
+    "description": "cto peña de tapala , Bosques de Santa Anita, Tlajomulco de Zúñiga",
     "location": {
+<<<<<<< Updated upstream
       "street": "789 Forest Lane",
       "city": "Guadalajara",
       "state": "JAL",
       "zipcode": "80201"
+=======
+      "street": "cto peña de tapala",
+      "city": "Denver",
+      "state": "CO",
+      "zipcode": "45656"
+>>>>>>> Stashed changes
     },
     "beds": 2,
     "baths": 1,
@@ -261,8 +289,7 @@
       "Pet-Friendly"
     ],
     "rates": {
-      "nightly": 475,
-      "weekly": 2000
+      "monthly": 18000
     },
     "seller_info": {
       "name": "Robert Anderson",
@@ -311,11 +338,11 @@
   {
     "_id": "9",
     "owner": "6",
-    "name": "Mountain View Retreat",
+    "name": "Casa en Renta Bugambilias, Zona Sur, Zapopan, Jalisco ",
     "type": "House",
-    "description": "Enjoy stunning mountain views from this spacious retreat.",
+    "description": "AV. GUADALUPE , Fraccionamiento Bugambilias",
     "location": {
-      "street": "600 Summit Drive",
+      "street": "AV. GUADALUPE , Fraccionamiento Bugambilias",
       "city": "Boulder",
       "state": "CO",
       "zipcode": "80301"
@@ -331,8 +358,7 @@
       "Outdoor Grill/BBQ"
     ],
     "rates": {
-      "weekly": 1000,
-      "monthly": 3800
+      "monthly": 17500
     },
     "seller_info": {
       "name": "Lisa Taylor",
