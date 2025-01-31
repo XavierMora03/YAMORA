@@ -2,16 +2,6 @@
   {
     "_id": "1",
     "owner": "1",
-<<<<<<< Updated upstream
-    "name": "Boston Commons Retreat",
-    "type": "Departamento",
-    "description": "This is a beautiful apartment located near the commons. It is a 2 bedroom apartment with a full kitchen and bathroom. It is available for weekly or monthly rentals.",
-    "location": {
-      "street": "120 Tremont Street",
-      "city": "Guadalajara",
-      "state": "JAL",
-      "zipcode": "02108"
-=======
     "name": "Habitación en Guadalajara, México",
     "type": "Apartment",
     "description": "Disfruta de la tranquilidad de este alojamiento céntrico en la bella Guadalajara.Muy cerca se encuentra la línea 2 y 3 del tren ligero. Estamos a unos pasos de la zona comercial de Obregón, el mercado San Juan de Dios, la zona del vestir de Medrano, La Plaza Tapatía, Centro medico de occidente, etc.",
@@ -20,7 +10,6 @@
       "city": "Guadalajara",
       "state": "Jal",
       "zipcode": "44360"
->>>>>>> Stashed changes
     },
     "beds": 2,
     "baths": 1,
@@ -106,17 +95,10 @@
     "type": "Condo",
     "description": "Providencia, Una Recámara, Cochera, Super Ubicado, Vive en La Mejor Zona ",
     "location": {
-<<<<<<< Updated upstream
-      "street": "500 Lux Lane",
-      "city": "Guadalajara",
-      "state": "JAL",
-      "zipcode": "90001"
-=======
       "street": "Mantenimiento MN 200 ",
       "city": "Los Angeles",
       "state": "CA",
       "zipcode": "44630"
->>>>>>> Stashed changes
     },
     "beds": 3,
     "baths": 2,
@@ -191,15 +173,9 @@
     "type": "Studio",
     "description": "Stay in style in this modern downtown studio apartment.",
     "location": {
-<<<<<<< Updated upstream
-      "street": "75 Urban Avenue",
-      "city": "Guadalajara",
-      "state": "JAL",
-=======
       "street": "Edificio residencial ubicado en Providencia Guadalajara, Av. Pablo Neruda. Acceso vehicular por Calle Bogotá, drop off y acceso peatonal por Av. Pablo Neruda. ",
       "city": "Chicago",
       "state": "IL",
->>>>>>> Stashed changes
       "zipcode": "60601"
     },
     "beds": 1,
@@ -267,17 +243,10 @@
     "type": "Cottage Or Cabin",
     "description": "cto peña de tapala , Bosques de Santa Anita, Tlajomulco de Zúñiga",
     "location": {
-<<<<<<< Updated upstream
-      "street": "789 Forest Lane",
-      "city": "Guadalajara",
-      "state": "JAL",
-      "zipcode": "80201"
-=======
       "street": "cto peña de tapala",
       "city": "Denver",
       "state": "CO",
       "zipcode": "45656"
->>>>>>> Stashed changes
     },
     "beds": 2,
     "baths": 1,
