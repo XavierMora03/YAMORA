@@ -3,12 +3,12 @@
     "_id": "1",
     "owner": "1",
     "name": "Boston Commons Retreat",
-    "type": "Apartment",
+    "type": "Departamento",
     "description": "This is a beautiful apartment located near the commons. It is a 2 bedroom apartment with a full kitchen and bathroom. It is available for weekly or monthly rentals.",
     "location": {
       "street": "120 Tremont Street",
-      "city": "Boston",
-      "state": "MA",
+      "city": "Guadalajara",
+      "state": "JAL",
       "zipcode": "02108"
     },
     "beds": 2,
@@ -47,18 +47,18 @@
   {
     "_id": "2",
     "owner": "1",
-    "name": "Cozy Downtown Loft",
-    "type": "Apartment",
-    "description": "A cozy downtown loft with great city views.",
+    "name": "Departamento Unico Completamente Remodelado 2 Plantas",
+    "type": "Departamento",
+    "description": "Se entrega Amueblado y con aires acondicionados",
     "location": {
-      "street": "45 Main Street",
-      "city": "New York",
-      "state": "NY",
-      "zipcode": "10001"
+      "street": "José María Vigil 2436 ",
+      "city": "Guadalajara",
+      "state": "JAL",
+      "zipcode": "44648"
     },
-    "beds": 1,
-    "baths": 1,
-    "square_feet": 1800,
+    "beds": 3,
+    "baths": 4,
+    "square_feet": 140,
     "amenities": [
       "Wifi",
       "Full kitchen",
@@ -75,11 +75,11 @@
       "Outdoor Grill/BBQ"
     ],
     "rates": {
-      "weekly": 1000,
-      "monthly": 4000
+  
+      "monthly": 27500
     },
     "seller_info": {
-      "name": "Jane Smith",
+      "name": "MPI Zapopan",
       "email": "jane@gmail.com",
       "phone": "212-555-5555"
     },
@@ -96,8 +96,8 @@
     "description": "Experience luxury in this stunning condo with breathtaking views.",
     "location": {
       "street": "500 Lux Lane",
-      "city": "Los Angeles",
-      "state": "CA",
+      "city": "Guadalajara",
+      "state": "JAL",
       "zipcode": "90001"
     },
     "beds": 3,
@@ -137,18 +137,18 @@
   {
     "_id": "4",
     "owner": "2",
-    "name": "Charming Cottage Getaway",
-    "type": "Cottage Or Cabin",
-    "description": "Escape to this charming cottage for a peaceful retreat.",
+    "name": "Departamento en Renta Parques Gdl 108 - H",
+    "type": "Departamento",
+    "description": "¡RENTA el departamento de tus sueños en Parques GDL!",
     "location": {
-      "street": "123 Countryside Lane",
-      "city": "Austin",
-      "state": "TX",
+      "street": "SALVADOR LOPEZ CHAVEZ 1750-3",
+      "city": "Guadalajara",
+      "state": "JAL",
       "zipcode": "78701"
     },
-    "beds": 1,
-    "baths": 1,
-    "square_feet": 900,
+    "beds": 2,
+    "baths": 2,
+    "square_feet": 64,
     "amenities": [
       "Fireplace",
       "Outdoor Grill/BBQ",
@@ -156,7 +156,7 @@
       "Coffee Maker"
     ],
     "rates": {
-      "weekly": 2000
+      "monthly": 13500
     },
     "seller_info": {
       "name": "Emily Davis",
@@ -176,8 +176,8 @@
     "description": "Stay in style in this modern downtown studio apartment.",
     "location": {
       "street": "75 Urban Avenue",
-      "city": "Chicago",
-      "state": "IL",
+      "city": "Guadalajara",
+      "state": "JAL",
       "zipcode": "60601"
     },
     "beds": 1,
@@ -207,18 +207,18 @@
   {
     "_id": "6",
     "owner": "3",
-    "name": "Seaside Retreat",
-    "type": "House",
-    "description": "Escape to this seaside house for a relaxing getaway.",
+    "name": "Renta Departamento Guadalajara",
+    "type": "Apartment",
+    "description": "Se renta departamento de dos habitaciones en Guadalajara ,se encuentran totalmente amueblados con todos los servicios incluidos: luz, agua, Internet, gas.",
     "location": {
-      "street": "456 Oceanfront Drive",
-      "city": "Miami",
-      "state": "FL",
+      "street": "Fray Antonio de Segovia 1261",
+      "city": "Guadalajara",
+      "state": "JAL",
       "zipcode": "33101"
     },
-    "beds": 4,
-    "baths": 3,
-    "square_feet": 2800,
+    "beds": 2,
+    "baths": 1,
+    "square_feet": 50,
     "amenities": [
       "Beach Access",
       "Swimming Pool",
@@ -227,8 +227,7 @@
       "Outdoor Grill/BBQ"
     ],
     "rates": {
-      "nightly": 500,
-      "weekly": 2500
+      "monthly": 9500
     },
     "seller_info": {
       "name": "Sarah Wilson",
@@ -248,8 +247,8 @@
     "description": "Experience nature in this cozy rustic cabin.",
     "location": {
       "street": "789 Forest Lane",
-      "city": "Denver",
-      "state": "CO",
+      "city": "Guadalajara",
+      "state": "JAL",
       "zipcode": "80201"
     },
     "beds": 2,
@@ -278,18 +277,18 @@
   {
     "_id": "8",
     "owner": "5",
-    "name": "Ski-In/Ski-Out Chalet",
-    "type": "Chalet",
-    "description": "Hit the slopes from this cozy ski-in/ski-out chalet.",
+    "name": "Renta Departamento Individual Guadalajara Cucs Centro Medico de Occidente Cucei",
+    "type": "Apartment",
+    "description": "Se renta departamento tipo Estudio para una o dos personas, totalmente amueblados con los servicios incluidos.",
     "location": {
-      "street": "321 Mountain Road",
-      "city": "Aspen",
-      "state": "CO",
+      "street": "Calle Francisco de Ayza 246",
+      "city": "Guadalajara",
+      "state": "JAL",
       "zipcode": "81611"
     },
-    "beds": 3,
-    "baths": 2,
-    "square_feet": 1800,
+    "beds": 1,
+    "baths": 1,
+    "square_feet": 40,
     "amenities": [
       "Ski Equipment Storage",
       "Fireplace",
@@ -297,8 +296,7 @@
       "Smart TV"
     ],
     "rates": {
-      "nightly": 300,
-      "weekly": 1100
+      "monthly": 5600
     },
     "seller_info": {
       "name": "Jennifer Martin",
@@ -349,18 +347,18 @@
   {
     "_id": "10",
     "owner": "7",
-    "name": "Historic Downtown Loft",
+    "name": "Dpto Renta Torre Aira Country Club Dpto Renta",
     "type": "Apartment",
-    "description": "Step back in time with a stay in this historic downtown loft.",
+    "description": "Excelente departamento (piso 12) con espectacular vista al campo de golf, Basílica, Los Charros, Punto Sao Paulo, Andares.",
     "location": {
-      "street": "123 History Lane",
-      "city": "Philadelphia",
-      "state": "PA",
+      "street": "MAR TIRRENO 2118",
+      "city": "Guadalajara",
+      "state": "JAL",
       "zipcode": "19101"
     },
-    "beds": 2,
-    "baths": 1,
-    "square_feet": 1200,
+    "beds": 3,
+    "baths": 3,
+    "square_feet": 425,
     "amenities": [
       "High-Speed Internet",
       "Air Conditioning",
@@ -368,8 +366,7 @@
       "Coffee Maker"
     ],
     "rates": {
-      "weekly": 550,
-      "monthly": 2100
+      "monthly": 95000
     },
     "seller_info": {
       "name": "Matthew Harris",
