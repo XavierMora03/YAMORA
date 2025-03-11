@@ -7,9 +7,10 @@ import HomeProperties from '@/components/HomeProperties';
 const HomePage = () => {
     return ( <>
         <Hero/>
-        <InfoBoxes/>
+        {/* <InfoBoxes/> */}
         <HomeProperties/>
     </> );
 }
  
 export default HomePage;
+

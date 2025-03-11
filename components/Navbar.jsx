@@ -16,7 +16,7 @@ const Navbar = () => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-    return ( <nav className="bg-blue-700 border-b border-blue-500">
+    return ( <nav className="bg-purple-700 border-b border-purple-500">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-20 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
@@ -30,7 +30,7 @@ const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               >
                 <span className="absolute -inset-0.5"></span>
-                <span className="sr-only">Open main menu</span>
+                <span className="sr-only">Abrir Menú Principal</span>
                 <svg
                   className="block h-6 w-6"
                   fill="none"
@@ -51,17 +51,7 @@ const Navbar = () => {
             <div
               className="flex flex-1 items-center justify-center md:items-stretch md:justify-start"
             >
-              {/* <!-- Logo --> */}
-              <Link className="flex flex-shrink-0 items-center" href="/">
-                <Image
-                  className="h-10 w-auto"
-                  src={logo}
-                  alt="PropertyPulse"
-                />
-  
-                <span className="hidden md:block text-white text-2xl font-bold ml-2"
-                  >PropertyPulse</span>
-              </Link>
+              
               {/* <!-- Desktop Menu Hidden below md screens --> */}
               <div className="hidden md:ml-6 md:block">
                 <div className="flex space-x-2">
@@ -72,17 +62,17 @@ const Navbar = () => {
                   <Link
                     href="/properties"
                     className={`${pathname === '/properties' ? 'bg-black' : ''} text-white hover:bg-gray-900 hover: text-white rounded-md px-3 py-2`}
-                    >Properties</Link>
+                    >Propiedades</Link>
                   {isLoggedIn && (
                   <Link
                     href="/properties/add"
                     className={`${pathname === '/properties/add' ? 'bg-black' : ''} text-white hover:bg-gray-900 hover: text-white rounded-md px-3 py-2`}
-                    >Add Property</Link>
+                    >Añadir propiedad</Link>
                   )}
                 </div>
               </div>
             </div>
-  
+            
             {/* <!-- Right Side Menu (Logged Out) --> */}
             {
               !isLoggedIn && (
@@ -93,7 +83,7 @@ const Navbar = () => {
                   className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
                 >
                   <FaGoogle className='text-white mr-2'/>
-                  <span>Login or Register</span>
+                  <span>Iniciar sesión o Registrarse</span>
                 </button>
               </div>
             </div>
@@ -111,7 +101,7 @@ const Navbar = () => {
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
                   <span className="absolute -inset-1.5"></span>
-                  <span className="sr-only">View notifications</span>
+                  <span className="sr-only">Ver notificaciones</span>
                   <svg
                     className="h-6 w-6"
                     fill="none"
@@ -134,6 +124,7 @@ const Navbar = () => {
                   {/* <!-- Replace with the actual number of notifications --> */}
                 </span>
               </Link>
+
               {/* <!-- Profile dropdown button --> */}
               <div className="relative ml-3">
                 <div>
@@ -146,7 +137,7 @@ const Navbar = () => {
                     onClick={()=> setIsProfileMenuOpen((prev)=>!prev)}
                   >
                     <span className="absolute -inset-1.5"></span>
-                    <span className="sr-only">Open user menu</span>
+                    <span className="sr-only">Abrir menú de usuario</span>
                     <Image
                       className="h-8 w-8 rounded-full"
                       src={profileDefault}
@@ -174,7 +165,7 @@ const Navbar = () => {
                     role="menuitem"
                     tabIndex="-1"
                     id="user-menu-item-0"
-                    >Your Profile</Link
+                    >Tu perfil</Link
                   >
                   <Link
                     href="/properties/saved"
@@ -182,7 +173,7 @@ const Navbar = () => {
                     role="menuitem"
                     tabIndex="-1"
                     id="user-menu-item-2"
-                    >Saved Properties</Link
+                    >Propiedades guardadas</Link
                   >
                   <button
                     className="block px-4 py-2 text-sm text-gray-700"
@@ -190,16 +181,27 @@ const Navbar = () => {
                     tabIndex="-1"
                     id="user-menu-item-2"
                   >
-                    Sign Out
+                    Cerrar sesión
                   </button>
                 </div>
                 )}
               </div>
             </div>
               )}
+              {/* <!-- Logo --> */}
+            <Link className="flex flex-shrink-0 items-center" href="/">
+                {/* <Image
+                  className="h-10 w-auto"
+                  src={logo}
+                  alt="Yamora"
+                /> */}
+  
+                <span className="hidden md:block text-white text-2xl font-bold ml-2"
+                  >Rentas Yamora</span>
+              </Link>
           </div>
         </div>
-  
+        
         {/* <!-- Mobile menu, show/hide based on menu state. --> */}
         {
           isMobileMenuOpen && (
@@ -213,12 +215,12 @@ const Navbar = () => {
             <Link
               href="/properties"
               className={`${pathname === '/properties' ? 'bg-black' : ''} text-white block rounded-md px-3 py-2 text-base font-medium`}
-              >Properties</Link>
+              >Propiedades</Link>
             { isLoggedIn && (
             <Link
               href="/properties/add"
               className={`${pathname === '/properties/add' ? 'bg-black' : ''} text-white block rounded-md px-3 py-2 text-base font-medium`}
-              >Add Property</Link>
+              >Añadir propiedad</Link>
             )}
             {
               !isLoggedIn && (
@@ -226,7 +228,7 @@ const Navbar = () => {
               className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5"
             >
               <i className="fa-brands fa-google mr-2"></i>
-              <span>Login or Register</span>
+              <span>Iniciar sesión o Registrarse</span>
             </button>
               )}
           </div>

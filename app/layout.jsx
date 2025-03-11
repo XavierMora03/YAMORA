@@ -5,7 +5,7 @@ import Footer from '@/components/Footer';
 export const metadata = {
     title: 'Rentas YAMORA',
     keywords: 'rental, property, real-state',
-    description: 'Find the perfect House'
+    description: 'Encuentra tu casona'
 }
 
 const MainLayout = ({children}) => {
