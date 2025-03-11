@@ -1,8 +1,11 @@
-import properties from '@/properties.json';
+import Property from '@/models/Property';
+import connectDB from '@/config/database'
 import PropertyHeaderImage from '@/components/PropertyHeaderImage';
 import {FaBed, FaBath, FaRulerCombined, FaMoneyBill, FaMapMarker, FaMarker} from 'react-icons/fa'
 
 const PropertyPage = ({ params }) => {
+    await connectDB();
+    const property = await Property.findById(params.id).lean();
     console.log("ID recibido:", params.id);
     console.log("Lista de IDs en JSON:", properties.map(p => p._id));
 
