@@ -1,87 +1,58 @@
-import Property from '@/models/Property';
-import connectDB from '@/config/database'
-import PropertyHeaderImage from '@/components/PropertyHeaderImage';
-import {FaBed, FaBath, FaRulerCombined, FaMoneyBill, FaMapMarker, FaMarker} from 'react-icons/fa'
+import PropertyDetails from '@/components/PropertyDetails';
+import mongoose from "mongoose";
+import connectDB from "@/config/database";
+import Property from "@/models/Property";
+import PropertyHeaderImage from "@/components/PropertyHeaderImage";
+import Link from 'next/link';
+import {FaArrowLeft} from 'react-icons/fa';
 
-const PropertyPage = ({ params }) => {
-    await connectDB();
-    const property = await Property.findById(params.id).lean();
-    console.log("ID recibido:", params.id);
-    console.log("Lista de IDs en JSON:", properties.map(p => p._id));
+const PropertyPage = async ({ params }) => {
+  await connectDB();
+  const awaitedParams = await Promise.resolve(params);
+  console.log("Params recibidos:", awaitedParams);
 
-    // Buscar la propiedad usando `_id`, asegurándonos de que coincidan los tipos de datos
-    const property = properties.find(p => p._id === params.id) || 
-                     properties.find(p => p._id === String(params.id));
 
-    if (!property) {
-        return <section>Propiedad no encontrada</section>;
-    }
+  const propertyId = awaitedParams.id || awaitedParams._id;
+  console.log("ID obtenido:", propertyId);
 
-    return (
-        
-        <section>
-            
-            <div className="rounded-xl shadow-md relative">
-            <PropertyHeaderImage image={property.images[0]}/>
-        <div className="p-4">
-          <div className="text-left md:text-center lg:text-left mb-6">
-            <div className="text-gray-600">{property.type}</div>
-            <h3 className="text-xl font-bold">{property.name}</h3>
-            <p>{property.description}</p>
-          </div>
-         
-          
+  let property;
 
-          <div className="flex justify-center gap-4 text-gray-500 mb-4">
-            <p>
-              <i className="fa-solid fa-bed"></i> <FaBed className="md:hidden lg:inline"/>{' '}{property.beds}{' '}
-              <span className="md:hidden lg:inline">Cuartos</span>
-            </p>
-            <p>
-              <FaBath className="md:hidden lg:inline"/>{' '}{property.baths}{' '}
-              <span className="md:hidden lg:inline">Baños</span>
-            </p>
-            <p>
-            <FaRulerCombined className="md:hidden lg:inline"/>
-              {' '}{property.square_feet} <span className="md:hidden lg:inline">mt2</span>
-            </p>
-          </div>
+  if (mongoose.Types.ObjectId.isValid(propertyId)) {
+    property = await Property.findById(propertyId).lean();
+  } else {
 
-          {/* <div
-            className="flex justify-center gap-4 text-green-900 text-sm mb-4"
-          >
-            <p><FaMoneyBill className="md:hidden lg:inline"/>{' '} Mensual</p>
-            <p><FaMoneyBill className="md:hidden lg:inline"/>{' '} Anual</p>
-          </div> */}
+    property = await Property.collection.findOne({ _id: propertyId });
+  }
 
-          <div className="border border-gray-100 mb-5"></div>
+  if (!property) {
+    return <div>Propiedad no encontrada</div>;
+  }
 
-          <div className="flex flex-col lg:flex-row justify-between mb-4">
-            <div className="flex align-middle gap-2 mb-4 lg:mb-0">
-              <FaMapMarker className='text-orange-700 mt-1'/>
-              <span className="text-orange-700"> {property.location.city}{' '}{property.location.state}</span>
-            </div>
+  return (
+    <>
+      <PropertyHeaderImage image={property.images?.[0]} />
+      <section>
+        <div className="container m-auto py-6 px-6">
+          <Link href="/properties" className="text-purple-500 hover:text-purple-600 flex items-center">
+            <FaArrowLeft className='mr-2'/> Volver a propiedades
+          </Link>
+        </div>
+      </section>
+      <section className="bg-purple-50">
+      <div className="container m-auto py-10 px-6">
+        <div className="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
+          <div>
+            <PropertyDetails property={property}/>
           </div>
         </div>
-      </div> 
-            {/* <h1 className="text-xl font-bold">{property.name}</h1>
-            <p>{property.description}</p>
-            <div className="flex justify-center gap-4 text-gray-500 mb-4">
-            <p>
-              <i className="fa-solid fa-bed"></i> <FaBed className="md:hidden lg:inline"/>{' '}{property.beds}{' '}
-              <span className="md:hidden lg:inline">Cuartos</span>
-            </p>
-            <p>
-              <FaBath className="md:hidden lg:inline"/>{' '}{property.baths}{' '}
-              <span className="md:hidden lg:inline">Baños</span>
-            </p>
-            <p>
-            <FaRulerCombined className="md:hidden lg:inline"/>
-              {' '}{property.square_feet} <span className="md:hidden lg:inline">mt2</span>
-            </p>
-          </div> */}
+        </div>
         </section>
-    );
-}
+      
+    </>
+  );
+};
 
 export default PropertyPage;
+
+
+
