@@ -8,7 +8,7 @@ export const getSessionUser = async () => {
     }
 
     return {
-      user: session,user,
+      user: session.user,
       userId: session.user.id
     }
 }
