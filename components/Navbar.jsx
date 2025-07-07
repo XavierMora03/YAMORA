@@ -26,7 +26,8 @@ const Navbar = () => {
       setAuthProviders();
     },[]);
 
-    return ( <nav className="bg-purple-700 border-b border-purple-500">
+    return ( 
+      <nav className="bg-purple-700 border-b border-purple-500">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-20 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
@@ -163,46 +164,52 @@ const Navbar = () => {
   
                 {/* <!-- Profile dropdown --> */}
                 
-                {
-                  isProfileMenuOpen && (
-                 
-                <div
-                  id="user-menu"
-                  className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="user-menu-button"
-                  tabIndex="-1"
-                >
-                  <Link
-                    href="/profile"
-                    className="block px-4 py-2 text-sm text-gray-700"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="user-menu-item-0"
-                    >Tu perfil</Link
+                {isProfileMenuOpen && (
+                  <div
+                    id='user-menu'
+                    className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
+                    role='menu'
+                    aria-orientation='vertical'
+                    aria-labelledby='user-menu-button'
+                    tabIndex='-1'
                   >
-                  <Link
-                    href="/properties/saved"
-                    className="block px-4 py-2 text-sm text-gray-700"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="user-menu-item-2"
-                    >Propiedades guardadas</Link
-                  >
-                  <button
-                    className="block px-4 py-2 text-sm text-gray-700"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="user-menu-item-2"
-                    onClick={() => {
-                      setIsProfileMenuOpen(false);
-                      signOut()
-                    }}
-                  >
-                    Cerrar sesión
-                  </button>
-                </div>
+                    <Link
+                      href='/profile'
+                      className='block px-4 py-2 text-sm text-gray-700'
+                      role='menuitem'
+                      tabIndex='-1'
+                      id='user-menu-item-0'
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                      }}
+                    >
+                      Tu perfil
+                    </Link>
+                    <Link
+                      href='/properties/saved'
+                      className='block px-4 py-2 text-sm text-gray-700'
+                      role='menuitem'
+                      tabIndex='-1'
+                      id='user-menu-item-2'
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                      }}
+                    >
+                      Propiedades Guardadas
+                    </Link>
+                    <button
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                        signOut({ callbackUrl: '/' });
+                      }}
+                      className='block px-4 py-2 text-sm text-gray-700'
+                      role='menuitem'
+                      tabIndex='-1'
+                      id='user-menu-item-2'
+                    >
+                      Cerrar Sessión
+                    </button>
+                  </div>
                 )}
               </div>
             </div>
@@ -230,21 +237,25 @@ const Navbar = () => {
             <Link
               href="/"
               className={`${pathname === '/' ? 'bg-black' : ''} text-white block rounded-md px-3 py-2 text-base font-medium`}
+              onClick={()=> isProfileMenuOpen(false)}
               >Home</Link>
             <Link
               href="/properties"
               className={`${pathname === '/properties' ? 'bg-black' : ''} text-white block rounded-md px-3 py-2 text-base font-medium`}
+              onClick={()=> isProfileMenuOpen(false)}
               >Propiedades</Link>
             { session && (
             <Link
               href="/properties/add"
               className={`${pathname === '/properties/add' ? 'bg-black' : ''} text-white block rounded-md px-3 py-2 text-base font-medium`}
+              onClick={()=> isProfileMenuOpen(false)}
               >Añadir propiedad</Link>
             )}
             {
               !session && (
             <button
               className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5"
+              onClick={()=> isMobileMenuOpen(false)}
             >
               <i className="fa-brands fa-google mr-2"></i>
               <span>Iniciar sesión o Registrarse</span>
@@ -253,7 +264,8 @@ const Navbar = () => {
           </div>
         </div>
           )}
-      </nav> );
-}
+      </nav> 
+      );
+};
  
 export default Navbar;
