@@ -31,7 +31,7 @@ const ProfileProperties = ({properties:initialProperties}) => {
                 </Link>
                 <div className="mt-2">
                     <p className="text-lg font-semibold">{property.name}</p>
-                    <p className="text-gray-600">{property.location.street}{property.location.city.state}</p>
+                    <p className="text-gray-600">{property.location.street}, {property.location.city}, {property.location.state}</p>
                 </div>
                 <div className="mt-2">
                     <a
