@@ -207,7 +207,7 @@ const Navbar = () => {
                       tabIndex='-1'
                       id='user-menu-item-2'
                     >
-                      Cerrar Sessión
+                      Cerrar sesión
                     </button>
                   </div>
                 )}
