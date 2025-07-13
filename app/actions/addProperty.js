@@ -21,7 +21,6 @@ async function addProperty(formData){
   //Access all values from ameneties and images
   const amenities = formData.getAll('amenities');
   const images = formData.getAll('images').filter((image) => image.name !== '');
-  console.log(images);
 
   const propertyData = {
     owner: userId,
