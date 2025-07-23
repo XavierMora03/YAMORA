@@ -207,7 +207,7 @@ const Navbar = () => {
                       tabIndex='-1'
                       id='user-menu-item-2'
                     >
-                      Cerrar Sessión
+                      Cerrar sesión
                     </button>
                   </div>
                 )}
@@ -255,7 +255,7 @@ const Navbar = () => {
               !session && (
             <button
               className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5"
-              onClick={()=> isMobileMenuOpen(false)}
+              onClick={()=> setIsMobileMenuOpen(false)}
             >
               <i className="fa-brands fa-google mr-2"></i>
               <span>Iniciar sesión o Registrarse</span>

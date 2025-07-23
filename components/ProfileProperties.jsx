@@ -1,8 +1,8 @@
 'use client';
 import { useState } from "react";
-import connectDB from "@/config/database";
 import Image from "next/image";
 import Link from "next/link";
+
 import {toast} from 'react-toastify'
 import deleteProperty from '@/app/actions/deleteProperty'
  
@@ -20,6 +20,7 @@ const ProfileProperties = ({properties:initialProperties}) => {
         setProperties(updatedProperties);
         toast.success('Propiedad eliminada con exito');
     }
+
     return properties.map(property => (
             <div key={property._id} className="mb-10">
                 <Link href={`/properties/${property._id}`}>
@@ -33,7 +34,7 @@ const ProfileProperties = ({properties:initialProperties}) => {
                 </Link>
                 <div className="mt-2">
                     <p className="text-lg font-semibold">{property.name}</p>
-                    <p className="text-gray-600">{property.location.street}{property.location.city.state}</p>
+                    <p className="text-gray-600">{property.location.street}, {property.location.city}, {property.location.state}</p>
                 </div>
                 <div className="mt-2">
                     <Link

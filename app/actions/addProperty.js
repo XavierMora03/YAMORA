@@ -21,7 +21,7 @@ async function addProperty(formData) {
   const amenities = formData.getAll('amenities');
   const images = formData.getAll('images').filter((image) => image.name !== '');
 
-  // Create the propertyData object with embedded seller_info
+propertyData object with embedded seller_info
   const propertyData = {
     type: formData.get('type'),
     name: formData.get('name'),
@@ -64,7 +64,7 @@ async function addProperty(formData) {
     const result = await cloudinary.uploader.upload(
       `data:image/png;base64,${imageBase64}`,
       {
-        folder: 'propertypulse',
+        folder: 'yamora',
       }
     );
 
