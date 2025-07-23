@@ -36,6 +36,12 @@ const PropertyDetails = ({property}) => {
                 `$${property.rates.monthly.toLocaleString()}`
               ) : (<div className="text-purple-500 mr-2 font-bold">No disponible</div>)}</div>
             </div>
+            <div className="flex items-center justify-center mb-4 pb-4 md:pb-0">
+              <div className="text-gray-500 mr-2 font-bold">Por noche</div>
+              <div className="text-2xl font-bold text-purple-500">{property.rates.nightly ? (
+                `$${property.rates.nightly.toLocaleString()}`
+              ) : (<div className="text-purple-500 mr-2 font-bold">No disponible</div>)}</div>
+            </div>
           </div>
         </div>
 
