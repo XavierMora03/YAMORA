@@ -38,11 +38,11 @@ async function updateProperty(propertyId, formData){
         baths: formData.get('baths'),
         square_feet: formData.get('square_feet'),
         amenities: formData.getAll('amenities'),
-        rates: {
-        weekly: formData.get('rates.weekly'),
-        monthly: formData.get('rates.monthly'),
-        nightly: formData.get('rates.nightly.'),
-        },
+         rates: {
+            weekly: formData.get('rates.weekly'),
+            monthly: formData.get('rates.monthly'),
+            nightly: formData.get('rates.nightly'),
+         },
         seller_info: {
         name: formData.get('seller_info.name'),
         email: formData.get('seller_info.email'),

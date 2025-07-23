@@ -41,7 +41,7 @@ const PropertySchema = new Schema({
     rates:{
         nightly: Number,
         weekly: Number,
-        Monthly: Number
+        monthly: Number
     },
     seller_info:{
         name: String,
