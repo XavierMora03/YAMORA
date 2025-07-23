@@ -10,7 +10,7 @@ import { convertToSerializableObject } from '@/utils/convertToObject';
     const property = convertToSerializableObject(propertyDoc)
 
     if(!property) {
-        return <h1 text-center text-2-1 font-bold mt-10>
+        return <h1 className='text-center text-2xl font-bold mt-10'>
             Property not found
         </h1>
     }
