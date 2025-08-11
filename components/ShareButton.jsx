@@ -16,24 +16,31 @@ const ShareButton = ({property}) => {
        <>
         <h3 className='text-xl font-bold text-center pt-2'>Share This Property</h3>
         <div className='flex gap-3 justify-center pb-5'>
-            <FacebookShareButton url={shareUrl} quote={property.name} hashtag={`#${property.type.replace(/\s/g,'')}RentaDisponible`}></FacebookShareButton>
-            <FacebookIcon size={40} round={true}></FacebookIcon>
+            <FacebookShareButton url={shareUrl} quote={property.name} hashtag={`#${property.type.replace(/\s/g,'')}RentaDisponible`}>
+                 <FacebookIcon size={40} round={true}></FacebookIcon>
+            </FacebookShareButton>
+           
             
             <TwitterShareButton url={shareUrl} quote={property.name} 
             hashtag={[`#${property.type.replace(/\s/g,'')}RentaDisponible`]
-            }></TwitterShareButton>
-            <TwitterIcon size={40} round={true}></TwitterIcon>
+            }>
+                  <TwitterIcon size={40} round={true}></TwitterIcon>
+            </TwitterShareButton>
+          
 
             <WhatsappShareButton url={shareUrl} title={property.name} 
-            
             separator='::'
-            ></WhatsappShareButton>
-            <WhatsappIcon size={40} round={true}></WhatsappIcon>
+            >
+                <WhatsappIcon size={40} round={true}></WhatsappIcon>
+            </WhatsappShareButton>
+            
 
             <EmailShareButton url={shareUrl} subject={property.name} 
             body={`Mira esta propiedad en renta ${shareUrl}`}
-            ></EmailShareButton>
-            <EmailIcon size={40} round={true}></EmailIcon>
+            >
+                <EmailIcon size={40} round={true}></EmailIcon>
+            </EmailShareButton>
+            
         </div>
        </>
     );
