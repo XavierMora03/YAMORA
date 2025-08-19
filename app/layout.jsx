@@ -1,9 +1,11 @@
 import Navbar from '@/components/Navbar';
-import '@/assets/styles/globals.css';
 import Footer from '@/components/Footer';
 import AuthProvider from '@/components/AuthProvider';
-import {ToastContainer} from 'react-toastify';
+import { GlobalProvider } from '@/context/GlobalContext';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '@/assets/styles/globals.css';
+//import 'photoswipe/dist/photoswipe.css';
 
 export const metadata = {
     title: 'Rentas YAMORA',
@@ -11,19 +13,21 @@ export const metadata = {
     description: 'Encuentra tu casona'
 }
 
-const MainLayout = ({children}) => {
-    return (
-        <AuthProvider>
-            <html>
-                <body>
-                <Navbar/>
-                <main>{children}</main> 
-                <Footer/>
-                <ToastContainer/>
-                </body>
-            </html>
-        </AuthProvider>
-    );
+const MainLayout = ({ children }) => {
+  return (
+    <AuthProvider>
+      <GlobalProvider>
+        <html lang='en'>
+          <body>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <ToastContainer />
+          </body>
+        </html>
+      </GlobalProvider>
+    </AuthProvider>
+  );
 };
 
 export default MainLayout;
