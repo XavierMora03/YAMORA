@@ -5,6 +5,9 @@ import connectDB from "@/config/database";
 import Property from "@/models/Property";
 import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 import Link from 'next/link';
+import BookmarkButton from '@/components/BookmarksButton';
+import PropertyContactForm from '@/components/PropertyContactForm';
+import ShareButton from '@/components/ShareButton';
 import {FaArrowLeft} from 'react-icons/fa';
 import { convertToSerializableObject } from '@/utils/convertToObject';
 const PropertyPage = async ({ params }) => {
@@ -47,9 +50,14 @@ const PropertyPage = async ({ params }) => {
         <section className="bg-purple-50">
         <div className="container m-auto py-10 px-6">
           <div className="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
-            <div>
+            
               <PropertyDetails property={property}/>
-            </div>
+              <aside className='space-y-4'>
+                <BookmarkButton property={property}></BookmarkButton>
+                <ShareButton property={property}></ShareButton>
+                <PropertyContactForm property={property}></PropertyContactForm>
+              </aside>
+            
           </div>
           </div>
           </section>
