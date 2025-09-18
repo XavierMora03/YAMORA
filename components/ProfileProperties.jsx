@@ -41,14 +41,14 @@ const ProfileProperties = ({properties:initialProperties}) => {
                     href={ `/properties/${property._id}/edit` }
                     className="bg-purple-500 text-white px-3 py-3 rounded-md mr-2 hover:bg-purple-600"
                     >
-                    Edit
+                    Editar
                     </Link>
                     <button
                     className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600"
                     type="button"
                     onClick={()=>handleDeleteProperty(property._id)}
                     >
-                    Delete
+                    Borrar
                     </button>
                 </div>
             </div>

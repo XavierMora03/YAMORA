@@ -11,14 +11,14 @@ async function deleteMessage(messageId) {
   const sessionUser = await getSessionUser();
 
   if (!sessionUser || !sessionUser.user) {
-    throw new Error('User ID is required');
+    throw new Error('Se necesita un ID de usuario');
   }
 
   const { userId } = sessionUser;
 
   const message = await Message.findById(messageId);
 
-  if (!message) throw new Error('Message Not Found');
+  if (!message) throw new Error('No se encontró el mensaje');
 
   // Verify ownership
   if (message.recipient.toString() !== userId) {

@@ -26,7 +26,7 @@ const BookmarkButton = ({property}) => {
     }, [property._id, userId, checkBookmarkStatus]);
     const handleClick = async() =>{
         if (!userId){
-            toast.error('You need to be signed in to bookmark a listing')
+            toast.error('Necesita iniciar sesión para guardar propiedades')
             return;
         }
 
@@ -41,13 +41,13 @@ const BookmarkButton = ({property}) => {
         <button
             className="bg-red-500 hover:bg-red-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
             onClick={handleClick}>
-            <FaBookmark className=" mr-2"></FaBookmark> Remove Bookmark
+            <FaBookmark className=" mr-2"></FaBookmark> Eliminar propiedad guardada
         </button>
     ):( 
         <button
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
             onClick={handleClick}>
-            <FaBookmark className=" mr-2"></FaBookmark> Bookmark Property
+            <FaBookmark className=" mr-2"></FaBookmark> Guardar propiedad
         </button>
     );
     

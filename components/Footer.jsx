@@ -15,8 +15,7 @@ const Footer = () => {
             className="flex flex-wrap justify-center md:justify-start mb-4 md:mb-0"
           >
             <ul className="flex space-x-4">
-              <li><Link href="/properties">Propiedades</Link></li>
-              <li><Link href="/">Terminos de servicio</Link></li>
+              {/* <li><Link href="/properties">Propiedades</Link></li> */}
             </ul>
           </div>
           <div>

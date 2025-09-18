@@ -10,7 +10,7 @@ async function getUnreadMessageCount() {
   const sessionUser = await getSessionUser();
 
   if (!sessionUser || !sessionUser.user) {
-    return { error: 'User ID is required' };
+    return { error: 'Se necesita un ID de usuario' };
   }
 
   const { userId } = sessionUser;
