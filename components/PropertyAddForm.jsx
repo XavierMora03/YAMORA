@@ -8,7 +8,7 @@ const PropertyAddForm = () => {
 
       <div className='mb-4'>
         <label htmlFor='type' className='block text-gray-700 font-bold mb-2'>
-          Property Type
+          Tipo de propiedad
         </label>
         <select
           id='type'
@@ -16,25 +16,25 @@ const PropertyAddForm = () => {
           className='border rounded w-full py-2 px-3'
           required
         >
-          <option value='Apartment'>Apartment</option>
-          <option value='Condo'>Condo</option>
-          <option value='House'>House</option>
-          <option value='CabinOrCottage'>Cabin or Cottage</option>
-          <option value='Room'>Room</option>
-          <option value='Studio'>Studio</option>
-          <option value='Other'>Other</option>
+          <option value='Apartmento'>Apartmento</option>
+          <option value='Condominio'>Condominio</option>
+          <option value='Casa'>Casa</option>
+          <option value='Cabina'>Cabina</option>
+          <option value='Cuarto'>Cuarto</option>
+          <option value='Estudio'>Estudio</option>
+          <option value='Otro'>Otro</option>
         </select>
       </div>
       <div className='mb-4'>
         <label className='block text-gray-700 font-bold mb-2'>
-          Listing Name
+          Nombre del inmueble
         </label>
         <input
           type='text'
           id='name'
           name='name'
           className='border rounded w-full py-2 px-3 mb-2'
-          placeholder='eg. Beautiful Apartment In Miami'
+          placeholder='ej. Bonito departamento en Tlajomulco'
           required
         />
       </div>
@@ -43,32 +43,32 @@ const PropertyAddForm = () => {
           htmlFor='description'
           className='block text-gray-700 font-bold mb-2'
         >
-          Description
+          Descripción
         </label>
         <textarea
           id='description'
           name='description'
           className='border rounded w-full py-2 px-3'
           rows='4'
-          placeholder='Add an optional description of your property'
+          placeholder='Escribe una descripción para tu listado'
         ></textarea>
       </div>
 
       <div className='mb-4 bg-blue-50 p-4'>
-        <label className='block text-gray-700 font-bold mb-2'>Location</label>
+        <label className='block text-gray-700 font-bold mb-2'>Ubicación</label>
         <input
           type='text'
           id='street'
           name='location.street'
           className='border rounded w-full py-2 px-3 mb-2'
-          placeholder='Street'
+          placeholder='Calle'
         />
         <input
           type='text'
           id='city'
           name='location.city'
           className='border rounded w-full py-2 px-3 mb-2'
-          placeholder='City'
+          placeholder='Ciudad'
           required
         />
         <input
@@ -76,7 +76,7 @@ const PropertyAddForm = () => {
           id='state'
           name='location.state'
           className='border rounded w-full py-2 px-3 mb-2'
-          placeholder='State'
+          placeholder='Estado'
           required
         />
         <input
@@ -84,14 +84,14 @@ const PropertyAddForm = () => {
           id='zipcode'
           name='location.zipcode'
           className='border rounded w-full py-2 px-3 mb-2'
-          placeholder='Zipcode'
+          placeholder='Código Postal'
         />
       </div>
 
       <div className='mb-4 flex flex-wrap'>
         <div className='w-full sm:w-1/3 pr-2'>
           <label htmlFor='beds' className='block text-gray-700 font-bold mb-2'>
-            Beds
+            Recamaras
           </label>
           <input
             type='number'
@@ -103,7 +103,7 @@ const PropertyAddForm = () => {
         </div>
         <div className='w-full sm:w-1/3 px-2'>
           <label htmlFor='baths' className='block text-gray-700 font-bold mb-2'>
-            Baths
+            Baños
           </label>
           <input
             type='number'
@@ -118,7 +118,7 @@ const PropertyAddForm = () => {
             htmlFor='square_feet'
             className='block text-gray-700 font-bold mb-2'
           >
-            Square Feet
+            Metros cuadrados
           </label>
           <input
             type='number'
@@ -131,7 +131,7 @@ const PropertyAddForm = () => {
       </div>
 
       <div className='mb-4'>
-        <label className='block text-gray-700 font-bold mb-2'>Amenities</label>
+        <label className='block text-gray-700 font-bold mb-2'>Amenidades</label>
         <div className='grid grid-cols-2 md:grid-cols-3 gap-2'>
           <div>
             <input
@@ -148,71 +148,71 @@ const PropertyAddForm = () => {
               type='checkbox'
               id='amenity_kitchen'
               name='amenities'
-              value='Full kitchen'
+              value='Cocina completa'
               className='mr-2'
             />
-            <label htmlFor='amenity_kitchen'>Full kitchen</label>
+            <label htmlFor='amenity_kitchen'>Cocina completa</label>
           </div>
           <div>
             <input
               type='checkbox'
               id='amenity_washer_dryer'
               name='amenities'
-              value='Washer & Dryer'
+              value='Lavadora'
               className='mr-2'
             />
-            <label htmlFor='amenity_washer_dryer'>Washer & Dryer</label>
+            <label htmlFor='amenity_washer_dryer'>Lavadora</label>
           </div>
           <div>
             <input
               type='checkbox'
               id='amenity_free_parking'
               name='amenities'
-              value='Free Parking'
+              value='Estacionamiento'
               className='mr-2'
             />
-            <label htmlFor='amenity_free_parking'>Free Parking</label>
+            <label htmlFor='amenity_free_parking'>Estacionamiento</label>
           </div>
           <div>
             <input
               type='checkbox'
               id='amenity_pool'
               name='amenities'
-              value='Swimming Pool'
+              value='Alberca'
               className='mr-2'
             />
-            <label htmlFor='amenity_pool'>Swimming Pool</label>
+            <label htmlFor='amenity_pool'>Alberca</label>
           </div>
           <div>
             <input
               type='checkbox'
               id='amenity_hot_tub'
               name='amenities'
-              value='Hot Tub'
+              value='Jacuzzi'
               className='mr-2'
             />
-            <label htmlFor='amenity_hot_tub'>Hot Tub</label>
+            <label htmlFor='amenity_hot_tub'>Jacuzzi</label>
           </div>
           <div>
             <input
               type='checkbox'
               id='amenity_24_7_security'
               name='amenities'
-              value='24/7 Security'
+              value='Seguridad 24/7'
               className='mr-2'
             />
-            <label htmlFor='amenity_24_7_security'>24/7 Security</label>
+            <label htmlFor='amenity_24_7_security'>Seguridad 24/7</label>
           </div>
           <div>
             <input
               type='checkbox'
               id='amenity_wheelchair_accessible'
               name='amenities'
-              value='Wheelchair Accessible'
+              value='Acceso para silla de ruedas'
               className='mr-2'
             />
             <label htmlFor='amenity_wheelchair_accessible'>
-              Wheelchair Accessible
+              Acceso para silla de ruedas
             </label>
           </div>
           <div>
@@ -220,31 +220,31 @@ const PropertyAddForm = () => {
               type='checkbox'
               id='amenity_elevator_access'
               name='amenities'
-              value='Elevator Access'
+              value='Elevador'
               className='mr-2'
             />
-            <label htmlFor='amenity_elevator_access'>Elevator Access</label>
+            <label htmlFor='amenity_elevator_access'>Elevador</label>
           </div>
           <div>
             <input
               type='checkbox'
               id='amenity_dishwasher'
               name='amenities'
-              value='Dishwasher'
+              value='Lavavajillas'
               className='mr-2'
             />
-            <label htmlFor='amenity_dishwasher'>Dishwasher</label>
+            <label htmlFor='amenity_dishwasher'>Lavavajillas</label>
           </div>
           <div>
             <input
               type='checkbox'
               id='amenity_gym_fitness_center'
               name='amenities'
-              value='Gym/Fitness Center'
+              value='Gym'
               className='mr-2'
             />
             <label htmlFor='amenity_gym_fitness_center'>
-              Gym/Fitness Center
+              Gym
             </label>
           </div>
           <div>
@@ -252,20 +252,20 @@ const PropertyAddForm = () => {
               type='checkbox'
               id='amenity_air_conditioning'
               name='amenities'
-              value='Air Conditioning'
+              value='Aire acondicionado'
               className='mr-2'
             />
-            <label htmlFor='amenity_air_conditioning'>Air Conditioning</label>
+            <label htmlFor='amenity_air_conditioning'>Aire acondicionado</label>
           </div>
           <div>
             <input
               type='checkbox'
               id='amenity_balcony_patio'
               name='amenities'
-              value='Balcony/Patio'
+              value='Balcón'
               className='mr-2'
             />
-            <label htmlFor='amenity_balcony_patio'>Balcony/Patio</label>
+            <label htmlFor='amenity_balcony_patio'>Balcón</label>
           </div>
           <div>
             <input
@@ -282,22 +282,22 @@ const PropertyAddForm = () => {
               type='checkbox'
               id='amenity_coffee_maker'
               name='amenities'
-              value='Coffee Maker'
+              value='Cafetera'
               className='mr-2'
             />
-            <label htmlFor='amenity_coffee_maker'>Coffee Maker</label>
+            <label htmlFor='amenity_coffee_maker'>Cafetera</label>
           </div>
         </div>
       </div>
 
       <div className='mb-4 bg-blue-50 p-4'>
         <label className='block text-gray-700 font-bold mb-2'>
-          Rates (Leave blank if not applicable)
+          Tarifas, (deja en blanco si no aplica)
         </label>
         <div className='flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4'>
           <div className='flex items-center'>
             <label htmlFor='weekly_rate' className='mr-2'>
-              Weekly
+              Semanal
             </label>
             <input
               type='number'
@@ -308,7 +308,7 @@ const PropertyAddForm = () => {
           </div>
           <div className='flex items-center'>
             <label htmlFor='monthly_rate' className='mr-2'>
-              Monthly
+              Mensual
             </label>
             <input
               type='number'
@@ -319,7 +319,7 @@ const PropertyAddForm = () => {
           </div>
           <div className='flex items-center'>
             <label htmlFor='nightly_rate' className='mr-2'>
-              Nightly
+              Noche
             </label>
             <input
               type='number'
@@ -336,14 +336,14 @@ const PropertyAddForm = () => {
           htmlFor='seller_name'
           className='block text-gray-700 font-bold mb-2'
         >
-          Seller Name
+          Nombre del propietario
         </label>
         <input
           type='text'
           id='seller_name'
           name='seller_info.name'
           className='border rounded w-full py-2 px-3'
-          placeholder='Name'
+          placeholder='Nombre'
         />
       </div>
       <div className='mb-4'>
@@ -351,14 +351,14 @@ const PropertyAddForm = () => {
           htmlFor='seller_email'
           className='block text-gray-700 font-bold mb-2'
         >
-          Seller Email
+          Email del propietario
         </label>
         <input
           type='email'
           id='seller_email'
           name='seller_info.email'
           className='border rounded w-full py-2 px-3'
-          placeholder='Email address'
+          placeholder='Dirección de email'
           required
         />
       </div>
@@ -367,20 +367,20 @@ const PropertyAddForm = () => {
           htmlFor='seller_phone'
           className='block text-gray-700 font-bold mb-2'
         >
-          Seller Phone
+          Telefono del propietario
         </label>
         <input
           type='tel'
           id='seller_phone'
           name='seller_info.phone'
           className='border rounded w-full py-2 px-3'
-          placeholder='Phone'
+          placeholder='Telefono'
         />
       </div>
 
       <div className='mb-4'>
         <label htmlFor='images' className='block text-gray-700 font-bold mb-2'>
-          Images (Select up to 4 images)
+          Imagenes (Selecciona hasta 4)
         </label>
         <input
           type='file'
@@ -398,7 +398,7 @@ const PropertyAddForm = () => {
           className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline'
           type='submit'
         >
-          Add Property
+          Agregar propiedad
         </button>
       </div>
     </form>
