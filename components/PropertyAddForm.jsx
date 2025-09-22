@@ -16,7 +16,7 @@ const PropertyAddForm = () => {
           className='border rounded w-full py-2 px-3'
           required
         >
-          <option value='Apartamento'>Apartmento</option>
+          <option value='Apartamento'>Apartamento</option>
           <option value='Condominio'>Condominio</option>
           <option value='Casa'>Casa</option>
           <option value='Cabina'>Cabina</option>

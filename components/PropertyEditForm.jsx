@@ -17,7 +17,7 @@ const PropertyEditForm = ({property}) =>{
             defaultValue={property.type}
             required
           >
-            <option value='Apartamento'>Apartmento</option>
+            <option value='Apartamento'>Apartamento</option>
             <option value='Condominio'>Condominio</option>
             <option value='Casa'>Casa</option>
             <option value='Cabina'>Cabina</option>
