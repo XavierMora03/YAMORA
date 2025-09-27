@@ -10,7 +10,7 @@ async function markMessageAsRead(messageId) {
   const sessionUser = await getSessionUser();
 
   if (!sessionUser || !sessionUser.user) {
-    throw new Error('User ID is required');
+    throw new Error('Se necesita un ID de usuario');
   }
 
   const { userId } = sessionUser;

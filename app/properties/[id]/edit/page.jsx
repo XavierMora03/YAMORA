@@ -11,7 +11,7 @@ import { convertToSerializableObject } from '@/utils/convertToObject';
 
     if(!property) {
         return <h1 className='text-center text-2xl font-bold mt-10'>
-            Property not found
+            Propiedad no encontrada
         </h1>
     }
 

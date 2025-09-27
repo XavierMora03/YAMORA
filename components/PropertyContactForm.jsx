@@ -50,7 +50,7 @@ const PropertyContactForm = ({ property }) => {
               id="name"
               name="name"
               type="text"
-              placeholder="Enter your name"
+              placeholder="Ingresa tu nombre"
               required
             />
           </div>
@@ -67,7 +67,7 @@ const PropertyContactForm = ({ property }) => {
               id="email"
               name="email"
               type="email"
-              placeholder="Enter your email"
+              placeholder="Ingresa tu correo"
               required
             />
           </div>
@@ -84,7 +84,7 @@ const PropertyContactForm = ({ property }) => {
               id="phone"
               name="phone"
               type="text"
-              placeholder="Enter your phone number"
+              placeholder="Ingresa tu número telefónico"
             />
           </div>
 
@@ -99,7 +99,7 @@ const PropertyContactForm = ({ property }) => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 h-44 focus:outline-none focus:shadow-outline"
               id="message"
               name="message"
-              placeholder="Enter your message"
+              placeholder="Escribe tu mensaje"
             ></textarea>
           </div>
 
