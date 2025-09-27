@@ -12,7 +12,7 @@ async function bookmarkProperty(propertyId){
     const sessionUser = await getSessionUser();
 
     if (!sessionUser || !sessionUser.userId){
-        throw new Error('User ID is required')
+        throw new Error('Se necesita un ID de usuario')
     }
 
     const {userId} = sessionUser;
@@ -25,12 +25,12 @@ async function bookmarkProperty(propertyId){
     if(isBookmarked){
         // if bookmarked, remove it
         user.bookmarks.pull(propertyId);
-        message='Bookmark Removed';
+        message='Propiedad eliminada de guardados';
         isBookmarked=false;
     }else{
         // if bookmarked, remove it
         user.bookmarks.push(propertyId);
-        message='Bookmark Added';
+        message='Se guardó la propiedad';
         isBookmarked=true;
     }
 

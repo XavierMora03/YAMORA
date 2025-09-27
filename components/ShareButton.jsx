@@ -14,7 +14,7 @@ const ShareButton = ({property}) => {
     console.log(shareUrl)
     return (
        <>
-        <h3 className='text-xl font-bold text-center pt-2'>Share This Property</h3>
+        <h3 className='text-xl font-bold text-center pt-2'>Compartir propiedad</h3>
         <div className='flex gap-3 justify-center pb-5'>
             <FacebookShareButton url={shareUrl} quote={property.name} hashtag={`#${property.type.replace(/\s/g,'')}RentaDisponible`}>
                  <FacebookIcon size={40} round={true}></FacebookIcon>

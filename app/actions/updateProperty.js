@@ -12,7 +12,7 @@ async function updateProperty(propertyId, formData){
     const sessionUser = await getSessionUser();
 
     if (!sessionUser || !sessionUser.userId) {
-    throw new Error('User ID is required');
+    throw new Error('Se necesita un ID de usuario');
     }
 
     const { userId } = sessionUser;
@@ -20,7 +20,7 @@ async function updateProperty(propertyId, formData){
     const existingProperty = await Property.findById(propertyId);
 
     if(existingProperty.owner.toString() !== userId){
-        throw new Error('Current user does not own this property');
+        throw new Error('Este usuario no es dueño de esta propiedad');
     }
     
     const propertyData = {
