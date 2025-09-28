@@ -78,7 +78,7 @@ export default function PropertySearchForm() {
 
       // If API returned no items, show a helpful message
       if (!arr.length) {
-        setError("No se encontraron propiedades. Se intentó fallback automático en el servidor.");
+        setError("No se encontraron propiedades.");
       }
     } catch (err) {
       console.error(err);
@@ -143,7 +143,7 @@ export default function PropertySearchForm() {
         )}
       </form>
 
-      <div className="mt-6">
+      <div className="mt-6 bg-white rounded p-2">
         {loading && <div className="text-center p-4">Buscando propiedades…</div>}
         {error && <div className="text-red-600 p-2">{error}</div>}
 
@@ -162,14 +162,14 @@ export default function PropertySearchForm() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
           {items.map((property) => (
             <PropertyCard key={property._id} property={property} />
           ))}
         </div>
 
         {!loading && !items.length && !error && (
-          <div className="text-gray-600 text-center mt-6">No hay resultados aún. Usa la búsqueda o activa "Buscar con AI".</div>
+          <div className="text-gray-600  text-center p-4">Usa la búsqueda simple o activa "Buscar con AI".</div>
         )}
       </div>
     </div>
