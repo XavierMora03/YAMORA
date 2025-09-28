@@ -11,22 +11,31 @@ if (!OPENAI_KEY) {
 /** ---------- Helper: call OpenAI to parse prompt -> JSON filter ---------- */
 async function callOpenAIParse(prompt) {
   const systemMessage = `
-You are a JSON-only generator. Given a single user search prompt, return ONLY one JSON object (no text, no code fences). Use only these fields:
-name, description, type,
-location.city, location.state, location.zipcode,
-beds, baths, square_feet,
-amenities,
-rates.nightly, rates.weekly, rates.monthly,
-is_featured,
-$or, $and
+You are a strict JSON filter generator for MongoDB. 
+Return ONLY a single JSON object (no text, no code fences).
+Use ONLY these allowed fields:
+- name, description, type
+- location.city, location.state, location.zipcode
+- beds, baths, square_feet
+- amenities
+- rates.nightly, rates.weekly, rates.monthly
+- is_featured
+- $or, $and
 
 Rules:
-- Text terms → produce $or entries of the form { "<field>": { "$regex": "<term>", "$options": "i" } } using fields name, description, amenities, location.city, location.state.
-- Numeric filters → use numeric operators $lt/$lte/$gt/$gte with numbers (no strings).
-- Normalize synonyms: "pet friendly","acepta mascotas" → "mascotas"; "pileta","alberca" → "Alberca"; "gym","gimnasio" → "Gym"; "balcony","balcón","terraza" → "balcón".
-- Use amenities as either { "amenities": { "$all": ["term1","term2"] } } or include them inside $or term regexes — either is acceptable.
-- If nothing relevant, return {}.
-- Do not use fields or operators outside the allowed list. No $where, no function code, no explanations.
+1. Text search terms → produce $or clauses with { "<field>": { "$regex": "<term>", "$options": "i" } } using:
+   - name, description, amenities, location.city, location.state
+2. Numeric filters:
+   - ALWAYS prefer "rates.monthly" as the default unless user explicitly says nightly/weekly.
+   - Use $lt, $lte, $gt, $gte with numbers (not strings).
+   - Example: "menos de 11000" → { "rates.monthly": { "$lt": 11000 } }
+3. Normalize synonyms into amenities:
+   - "pet friendly","acepta mascotas" → "mascotas"
+   - "pileta","alberca","piscina","pool" → "Alberca"
+   - "gym","gimnasio" → "Gym"
+   - "balcony","balcón","terraza" → "balcón"
+4. If user says nothing relevant, return {}.
+5. NEVER return fields or operators outside the allowed list. No $where, no JS, no explanations.
 `;
 
   const userMessage = `Prompt: ${prompt}\nDevuelve únicamente el objeto JSON del filtro.`;
@@ -170,7 +179,7 @@ function buildFallbackQuery(prompt) {
 
   // city/state tokens
   const tokens = Array.from(new Set((lower.match(/[a-záéíóúñ]{3,}/gi) || []).map(t => t.trim())));
-  const stop = new Set(["con","en","la","el","y","de","por","para","una","un","que","quiero","busco","hacer","ir","a"]);
+  const stop = new Set(["con","en","la","el","y","de","por","para","una","un","que","quiero","busco","hacer","ir","a","menos","para","hacia","alla"]);
   for (const t of tokens) {
     if (stop.has(t)) continue;
     // avoid adding if token is a synonym already handled
