@@ -11,27 +11,28 @@ if (!OPENAI_KEY) {
 /** ---------- Helper: call OpenAI to parse prompt -> JSON filter ---------- */
 async function callOpenAIParse(prompt) {
   const systemMessage = `
-Eres un experto en convertir prompts de búsqueda de propiedades a filtros de MongoDB.
-Devuelve SOLO un OBJETO JSON válido (sin explicaciones). Usa únicamente estos campos:
+You are a JSON-only generator. Given a single user search prompt, return ONLY one JSON object (no text, no code fences). Use only these fields:
 name, description, type,
 location.city, location.state, location.zipcode,
 beds, baths, square_feet,
 amenities,
 rates.nightly, rates.weekly, rates.monthly,
-is_featured
+is_featured,
+$or, $and
 
-Reglas importantes:
-- Normaliza sinónimos: "pet friendly"/"acepta mascotas" -> "mascotas";
-  "pileta"/"alberca" -> "Alberca"; "gym"/"gimnasio"->"Gym"; "balcón"/"terraza"->"balcón".
-- Para texto, genera $or con {field: { $regex: "<term>", $options: "i" }} sobre name, description, amenities, location.city, location.state.
-- Para números usa $lt/$lte/$gt/$gte con tipos numéricos.
-- NO uses campos u operadores fuera de los permitidos.
+Rules:
+- Text terms → produce $or entries of the form { "<field>": { "$regex": "<term>", "$options": "i" } } using fields name, description, amenities, location.city, location.state.
+- Numeric filters → use numeric operators $lt/$lte/$gt/$gte with numbers (no strings).
+- Normalize synonyms: "pet friendly","acepta mascotas" → "mascotas"; "pileta","alberca" → "Alberca"; "gym","gimnasio" → "Gym"; "balcony","balcón","terraza" → "balcón".
+- Use amenities as either { "amenities": { "$all": ["term1","term2"] } } or include them inside $or term regexes — either is acceptable.
+- If nothing relevant, return {}.
+- Do not use fields or operators outside the allowed list. No $where, no function code, no explanations.
 `;
 
   const userMessage = `Prompt: ${prompt}\nDevuelve únicamente el objeto JSON del filtro.`;
 
   const body = {
-    model: "gpt-5-mini",
+    model: "gpt-5",
     messages: [
       { role: "system", content: systemMessage },
       { role: "user", content: userMessage }
