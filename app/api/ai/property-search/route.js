@@ -1,6 +1,6 @@
 // app/api/ai/property-search/route.js
 import { NextResponse } from "next/server";
-import connectDB from '@/config/database';
+import connectDB from "@/config/database";
 import Property from "@/models/Property";
 
 const OPENAI_KEY = process.env.OPENAI_API_KEY;
@@ -8,98 +8,63 @@ if (!OPENAI_KEY) {
   console.warn("OPENAI_API_KEY not set in environment.");
 }
 
-/**
- * callOpenAIParse:
- * Instrucciones en español para que la LLM devuelva SÓLO un JSON
- * válido que podamos pasar directamente a Property.find()
- */
+/** ---------- Helper: call OpenAI to parse prompt -> JSON filter ---------- */
 async function callOpenAIParse(prompt) {
   const systemMessage = `
 Eres un experto en convertir prompts de búsqueda de propiedades a filtros de MongoDB.
-Sigue exactamente estas reglas y devuelve SOLO un OBJETO JSON (nada más, sin comentarios ni texto adicional):
+Devuelve SOLO un OBJETO JSON válido (sin explicaciones). Usa únicamente estos campos:
+name, description, type,
+location.city, location.state, location.zipcode,
+beds, baths, square_feet,
+amenities,
+rates.nightly, rates.weekly, rates.monthly,
+is_featured
 
-1) Usa únicamente campos del esquema Property:
-   - name, description, type,
-   - location.city, location.state, location.zipcode,
-   - beds, baths, square_feet,
-   - amenities,
-   - rates.nightly, rates.weekly, rates.monthly,
-   - is_featured
-
-2) Detecta sinónimos comunes y normalízalos:
-   - "pet friendly", "acepta mascotas" -> "mascotas"
-   - "pileta", "alberca" -> "Alberca"
-   - "gym", "gimnasio" -> "Gym"
-   - "cerca de escuela", "escuela" -> "escuela"
-   - "balcón", "terraza" -> "balcón"
-
-3) Cada palabra o concepto (por ejemplo "mascotas", "Alberca", "CDMX", "balcón") debe convertirse en una serie de entradas que busquen en TODOS los campos de texto:
-   name, description, amenities, location.city, location.state
-   usando { "$regex": "<term>", "$options": "i" }.
-
-4) Agrupa alternativas usando $or. Cada término es su propio conjunto de $or.
-   Ejemplo: si el prompt contiene "mascotas" y "Alberca" -> genera $or para "mascotas", otro $or para "Alberca".
-
-5) Para filtros numéricos (beds, baths, square_feet, rates.*) usa operadores $lt/$lte o $gt/$gte según el texto:
-   - "menos de 15000 mensual", "hasta 15000" -> { "rates.monthly": { "$lt": 15000 } }
-   - "más de 2 camas", ">= 2" -> { "beds": { "$gte": 2 } }
-   Interpreta unidades: "por noche" -> rates.nightly, "mensual" -> rates.monthly, "por semana" -> rates.weekly.
-
-6) Devuelve únicamente JSON válido que pueda pasarse directamente a Property.find().
-   Usa sólo los operadores y campos permitidos ($regex, $options, $lt, $lte, $gt, $gte, $or, $and, $all).
-   NO uses campos fuera de los permitidos ni operaciones peligrosas.
+Reglas importantes:
+- Normaliza sinónimos: "pet friendly"/"acepta mascotas" -> "mascotas";
+  "pileta"/"alberca" -> "Alberca"; "gym"/"gimnasio"->"Gym"; "balcón"/"terraza"->"balcón".
+- Para texto, genera $or con {field: { $regex: "<term>", $options: "i" }} sobre name, description, amenities, location.city, location.state.
+- Para números usa $lt/$lte/$gt/$gte con tipos numéricos.
+- NO uses campos u operadores fuera de los permitidos.
 `;
 
-  // User message — no backticks here to avoid breaking template literals
-  const userMessage = `Por favor responde únicamente con JSON válido (sin texto adicional). Aquí está el prompt del usuario: ${prompt}`;
+  const userMessage = `Prompt: ${prompt}\nDevuelve únicamente el objeto JSON del filtro.`;
 
   const body = {
     model: "gpt-5-mini",
     messages: [
       { role: "system", content: systemMessage },
-      { role: "user", content: userMessage },
+      { role: "user", content: userMessage }
     ],
     max_tokens: 500,
-    temperature: 0.0,
+    temperature: 0.0
   };
 
-  const resp = await fetch("https://api.openai.com/v1/chat/completions", {
+  const res = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${OPENAI_KEY}`,
+      Authorization: `Bearer ${OPENAI_KEY}`
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(body)
   });
 
-  if (!resp.ok) {
-    const txt = await resp.text();
-    throw new Error(`OpenAI error: ${resp.status} ${txt}`);
+  if (!res.ok) {
+    const txt = await res.text();
+    throw new Error(`OpenAI error ${res.status}: ${txt}`);
   }
 
-  const j = await resp.json();
-  const content = j.choices?.[0]?.message?.content ?? "";
+  const json = await res.json();
+  const content = json.choices?.[0]?.message?.content ?? "";
 
-  // extraer el JSON entre la primera y última llave
-  const firstBrace = content.indexOf("{");
-  const lastBrace = content.lastIndexOf("}");
-  if (firstBrace !== -1 && lastBrace !== -1) {
-    const jsonStr = content.slice(firstBrace, lastBrace + 1);
-    try {
-      const parsed = JSON.parse(jsonStr);
-      return parsed;
-    } catch (e) {
-      throw new Error("No se pudo parsear JSON desde la respuesta del LLM: " + e.message);
-    }
-  }
-
-  throw new Error("No JSON encontrado en la respuesta del LLM.");
+  const first = content.indexOf("{");
+  const last = content.lastIndexOf("}");
+  if (first === -1 || last === -1) throw new Error("No JSON detected in LLM response.");
+  const jsonStr = content.slice(first, last + 1);
+  return JSON.parse(jsonStr);
 }
 
-/**
- * Validación estricta del objeto JSON devuelto por la LLM.
- * Se asegura que sólo se usen keys permitidas y operadores seguros.
- */
+/** ---------- Safety validation ---------- */
 function isSafeMongoQuery(obj) {
   const ALLOWED_FIELDS = new Set([
     "name", "description", "type",
@@ -109,85 +74,46 @@ function isSafeMongoQuery(obj) {
     "rates.nightly", "rates.weekly", "rates.monthly",
     "is_featured"
   ]);
+  const ALLOWED_TOP = new Set(["$or", "$and"]);
+  const ALLOWED_OPS = new Set(["$regex", "$options", "$lt", "$lte", "$gt", "$gte", "$all"]);
 
-  const ALLOWED_TOP_LEVEL = new Set(["$or", "$and"]);
-
-  const ALLOWED_OPERATORS = new Set(["$regex", "$options", "$lt", "$lte", "$gt", "$gte", "$all"]);
-
-  function isFieldKey(k) {
-    return ALLOWED_FIELDS.has(k);
-  }
-
-  function isOperator(k) {
-    return ALLOWED_OPERATORS.has(k);
-  }
-
-  function recurse(value, parentKey = null) {
-    if (value === null) return true;
-    if (Array.isArray(value)) {
-      for (const item of value) {
-        if (!recurse(item)) return false;
-      }
-      return true;
-    }
-    if (typeof value === "object") {
-      for (const k of Object.keys(value)) {
-        const v = value[k];
-
-        // Top-level $or/$and
-        if (ALLOWED_TOP_LEVEL.has(k)) {
+  function check(node) {
+    if (node === null) return true;
+    if (Array.isArray(node)) return node.every(check);
+    if (typeof node === "object") {
+      for (const k of Object.keys(node)) {
+        const v = node[k];
+        if (ALLOWED_TOP.has(k)) {
           if (!Array.isArray(v)) return false;
-          for (const clause of v) {
-            if (typeof clause !== "object" || Array.isArray(clause)) return false;
-            if (!recurse(clause)) return false;
-          }
+          if (!v.every(x => typeof x === "object" && !Array.isArray(x) && check(x))) return false;
           continue;
         }
-
-        // If key is a permitted field (can be dotted)
-        if (isFieldKey(k)) {
-          // Value can be primitive or object with operators
+        if (ALLOWED_FIELDS.has(k)) {
           if (typeof v === "object" && v !== null && !Array.isArray(v)) {
             for (const op of Object.keys(v)) {
-              if (!isOperator(op)) return false;
+              if (!ALLOWED_OPS.has(op)) return false;
               const val = v[op];
-              if (op === "$options") {
-                if (typeof val !== "string") return false;
-              } else if (op === "$regex") {
-                if (typeof val !== "string") return false;
-              } else {
-                // numeric operators
-                if (typeof val !== "number") return false;
-              }
+              if (op === "$options") { if (typeof val !== "string") return false; }
+              else if (op === "$regex") { if (typeof val !== "string") return false; }
+              else { if (typeof val !== "number") return false; }
             }
           } else {
-            // primitive allowed (string, number, boolean)
-            const t = typeof v;
-            if (!["string", "number", "boolean"].includes(t)) return false;
+            if (!["string", "number", "boolean"].includes(typeof v)) return false;
           }
           continue;
         }
-
-        // If key is an operator at an unexpected position
-        if (isOperator(k)) {
-          return false;
-        }
-
-        // Any other key is invalid
+        // reject anything else
         return false;
       }
       return true;
     }
-    return ["string", "number", "boolean"].includes(typeof value);
+    return ["string", "number", "boolean"].includes(typeof node);
   }
 
-  return recurse(obj);
+  return check(obj);
 }
 
-/**
- * Fallback local parser: si la LLM falla o devuelve algo inseguro,
- * construimos un query simple siguiendo las reglas de sinónimos y ORs.
- */
+/** ---------- Local fallback parser (rules + synonyms) ---------- */
 function buildFallbackQuery(prompt) {
   const synonyms = {
     mascotas: ["pet friendly", "acepta mascotas", "mascotas"],
@@ -196,142 +122,158 @@ function buildFallbackQuery(prompt) {
     escuela: ["cerca de escuela", "escuela"],
     balcón: ["balcón", "terraza", "balcon"]
   };
-
   const textFields = ["name", "description", "amenities", "location.city", "location.state"];
-
   const lower = prompt.toLowerCase();
-
   const orClauses = [];
 
-  // detect synonyms
-  for (const [key, variants] of Object.entries(synonyms)) {
-    for (const v of variants) {
-      if (lower.includes(v)) {
-        for (const field of textFields) {
-          orClauses.push({ [field]: { $regex: escapeForRegex(key), $options: "i" } });
-        }
-        break;
-      }
+  // synonyms -> OR clauses
+  for (const [norm, variants] of Object.entries(synonyms)) {
+    if (variants.some(v => lower.includes(v))) {
+      for (const f of textFields) orClauses.push({ [f]: { $regex: escapeForRegex(norm), $options: "i" } });
     }
   }
 
-  // detect city/state tokens (simple words)
+  // detect explicit type like "casa", "departamento", "studio", etc.
+  const types = ["casa", "departamento", "estudio", "condominio", "room", "cuarto", "cabina", "cabin"];
+  for (const t of types) {
+    if (lower.includes(t)) {
+      // capitalize type loosely for nicer regex (but case-insensitive)
+      orClauses.push({ type: { $regex: t, $options: "i" } });
+    }
+  }
+
+  // numeric patterns: between X and Y, less than, more than
+  const between = lower.match(/entre\s*\$?\s*([\d.,]+)\s*(?:y|-)\s*\$?\s*([\d.,]+)/);
+  const less = lower.match(/(?:menos de|hasta)\s*\$?\s*([\d.,]+)/);
+  const more = lower.match(/(?:más de|mas de)\s*\$?\s*([\d.,]+)/);
+  let query = {};
+
+  if (between) {
+    const a = parseNumber(between[1]), b = parseNumber(between[2]);
+    if (!isNaN(a) && !isNaN(b)) query["rates.nightly"] = { $gte: Math.min(a, b), $lte: Math.max(a, b) };
+  } else if (less) {
+    const n = parseNumber(less[1]);
+    if (!isNaN(n)) {
+      if (lower.includes("mensual") || lower.includes("mes")) query["rates.monthly"] = { $lt: n };
+      else if (lower.includes("semana")) query["rates.weekly"] = { $lt: n };
+      else query["rates.nightly"] = { $lt: n };
+    }
+  } else if (more) {
+    const n = parseNumber(more[1]);
+    if (!isNaN(n)) {
+      if (lower.includes("mensual") || lower.includes("mes")) query["rates.monthly"] = { $gt: n };
+      else if (lower.includes("semana")) query["rates.weekly"] = { $gt: n };
+      else query["rates.nightly"] = { $gt: n };
+    }
+  }
+
+  // city/state tokens
   const tokens = Array.from(new Set((lower.match(/[a-záéíóúñ]{3,}/gi) || []).map(t => t.trim())));
-  const stop = new Set(["con","en","la","el","y","de","por","para","una","un","que","más","mas","menos","quiero","busco"]);
+  const stop = new Set(["con","en","la","el","y","de","por","para","una","un","que","quiero","busco","hacer","ir","a"]);
   for (const t of tokens) {
     if (stop.has(t)) continue;
-    const matchedSyn = Object.values(synonyms).some(arr => arr.some(v => t.includes(v)));
-    if (!matchedSyn) {
-      for (const field of ["location.city", "location.state"]) {
-        orClauses.push({ [field]: { $regex: escapeForRegex(t), $options: "i" } });
-      }
-    }
+    // avoid adding if token is a synonym already handled
+    if (Object.values(synonyms).flat().some(v => t.includes(v))) continue;
+    // add as city/state match
+    orClauses.push({ "location.city": { $regex: escapeForRegex(t), $options: "i" } });
+    orClauses.push({ "location.state": { $regex: escapeForRegex(t), $options: "i" } });
   }
 
-  // numeric: detect "menos de X mensual" or "hasta X mensual"
-  const currencyMatch = lower.match(/(?:menos de|hasta|<=|<)\s*\$?\s*([\d.,]+)/);
-  const moreMatch = lower.match(/(?:más de|mas de|>=|>)\s*\$?\s*([\d.,]+)/);
-  const betweenMatch = lower.match(/(?:entre)\s*\$?\s*([\d.,]+)\s*(?:y|-)\s*\$?\s*([\d.,]+)/);
-
-  let query = {};
-  if (betweenMatch) {
-    const a = parseNumber(betweenMatch[1]);
-    const b = parseNumber(betweenMatch[2]);
-    if (!isNaN(a) && !isNaN(b)) {
-      if (lower.includes("mensual") || lower.includes("mes")) {
-        query["rates.monthly"] = { $gte: Math.min(a, b), $lte: Math.max(a, b) };
-      } else if (lower.includes("noche") || lower.includes("por noche")) {
-        query["rates.nightly"] = { $gte: Math.min(a, b), $lte: Math.max(a, b) };
-      } else {
-        query["rates.nightly"] = { $gte: Math.min(a, b), $lte: Math.max(a, b) };
-      }
-    }
-  } else if (currencyMatch) {
-    const num = parseNumber(currencyMatch[1]);
-    if (!isNaN(num)) {
-      if (lower.includes("mensual") || lower.includes("mes")) {
-        query["rates.monthly"] = { $lt: num };
-      } else if (lower.includes("noche") || lower.includes("por noche")) {
-        query["rates.nightly"] = { $lt: num };
-      } else if (lower.includes("semana")) {
-        query["rates.weekly"] = { $lt: num };
-      } else {
-        query["rates.nightly"] = { $lt: num };
-      }
-    }
-  } else if (moreMatch) {
-    const num = parseNumber(moreMatch[1]);
-    if (!isNaN(num)) {
-      if (lower.includes("mensual") || lower.includes("mes")) {
-        query["rates.monthly"] = { $gt: num };
-      } else if (lower.includes("noche") || lower.includes("por noche")) {
-        query["rates.nightly"] = { $gt: num };
-      } else if (lower.includes("semana")) {
-        query["rates.weekly"] = { $gt: num };
-      } else {
-        query["rates.nightly"] = { $gt: num };
-      }
-    }
-  }
-
-  if (orClauses.length) {
-    query.$or = orClauses;
-  }
-
+  if (orClauses.length) query.$or = orClauses;
   return query;
 }
 
 function parseNumber(s) {
   if (!s) return NaN;
-  // Normalize "15,000" or "15.000" depending on format: remove thousands separators
   const cleaned = s.replace(/\s/g, "").replace(/\./g, "").replace(/,/g, ".");
   return parseFloat(cleaned);
 }
-
 function escapeForRegex(s) {
   return s.replace(/[.*+\-?^${}()|[\]\\]/g, "\\$&");
 }
 
+/** ---------- Broaden a query: drop numeric/amenities constraints to increase recall ---------- */
+function broadenQuery(q) {
+  if (!q || typeof q !== "object") return {};
+  const clone = JSON.parse(JSON.stringify(q));
+  // remove numeric constraints
+  ["beds", "baths", "square_feet", "rates.nightly", "rates.weekly", "rates.monthly"].forEach(k => {
+    if (clone[k]) delete clone[k];
+  });
+  // remove amenities exact matches
+  if (clone.amenities) delete clone.amenities;
+  // keep text $or if exists; otherwise empty obj
+  return clone;
+}
+
+/** ---------- Route handler ---------- */
 export async function POST(req) {
   try {
-    const body = await req.json();
-    const prompt = (body.prompt || "").toString().trim();
-    const limit = body.limit ? Number(body.limit) : 10;
+    const { prompt: rawPrompt = "", limit: rawLimit = 10 } = await req.json();
+    const prompt = String(rawPrompt || "").trim();
+    const limit = Math.max(1, Math.min(50, Number(rawLimit || 10)));
 
-    if (!prompt) {
-      return NextResponse.json({ error: "Missing prompt" }, { status: 400 });
-    }
+    if (!prompt) return NextResponse.json({ error: "Missing prompt" }, { status: 400 });
 
     await connectDB();
 
-    // attempt LLM parse -> DB query object
     let parsedQuery;
+    let parseSource = "llm";
     try {
       parsedQuery = await callOpenAIParse(prompt);
-
       if (!parsedQuery || typeof parsedQuery !== "object" || Array.isArray(parsedQuery)) {
-        throw new Error("La LLM no devolvió un objeto JSON válido.");
+        throw new Error("Invalid JSON from LLM");
       }
-
-      // validate safety
-      if (!isSafeMongoQuery(parsedQuery)) {
-        throw new Error("El JSON devuelto por la LLM contiene campos u operadores no permitidos.");
-      }
-
-    } catch (llmErr) {
-      console.warn("LLM parse failed or unsafe, using fallback parser:", llmErr.message);
+      if (!isSafeMongoQuery(parsedQuery)) throw new Error("Unsafe LLM query");
+    } catch (err) {
+      // fallback local
+      parseSource = "fallback_local";
       parsedQuery = buildFallbackQuery(prompt);
     }
 
-    // default sort: featured first, luego precio nocturno asc (si existe)
-    const sort = { is_featured: -1, "rates.nightly": 1 };
+    // try original query
+    let results = await Property.find(parsedQuery).limit(limit).lean().exec();
 
-    // Execute the query
-    const results = await Property.find(parsedQuery).limit(limit).sort(sort).lean().exec();
+    // progressive fallback: broaden query if no results
+    let fallbackSteps = [];
+    if (!results || results.length === 0) {
+      const broadened = broadenQuery(parsedQuery);
+      if (JSON.stringify(broadened) !== JSON.stringify(parsedQuery)) {
+        fallbackSteps.push({ step: "broadened", query: broadened });
+        results = await Property.find(broadened).limit(limit).lean().exec();
+      }
+    }
 
+    // next fallback: text search on prompt across name/description/amenities
+    if (!results || results.length === 0) {
+      const textOr = [
+        { name: { $regex: escapeForRegex(prompt), $options: "i" } },
+        { description: { $regex: escapeForRegex(prompt), $options: "i" } },
+        { amenities: { $regex: escapeForRegex(prompt), $options: "i" } },
+        { "location.city": { $regex: escapeForRegex(prompt), $options: "i" } },
+      ];
+      const textQuery = { $or: textOr };
+      fallbackSteps.push({ step: "text_search_prompt", query: textQuery });
+      results = await Property.find(textQuery).limit(limit).lean().exec();
+    }
+
+    // final fallback: always return at least one property (featured first, otherwise cheapest)
+    let finalFallback = false;
+    if (!results || results.length === 0) {
+      finalFallback = true;
+      const single = await Property.findOne({}).sort({ is_featured: -1, "rates.nightly": 1 }).lean().exec();
+      if (single) results = [single];
+      else results = [];
+      fallbackSteps.push({ step: "final_fallback_return_single", note: "returned top featured or cheapest property" });
+    }
+
+    // include helpful metadata for debugging/UI
     return NextResponse.json({
+      parseSource,
       parsedFilters: parsedQuery,
-      results,
+      fallbackSteps,
+      finalFallback,
+      results: results.slice(0, limit)
     });
   } catch (err) {
     console.error("API error", err);
