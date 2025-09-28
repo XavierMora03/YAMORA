@@ -5,15 +5,15 @@ const Pagination = ({page, pageSize, totalItems}) => {
         
         { page > 1 ? (
         <Link href={`/properties?page=${ page - 1 }&pageSize=${pageSize}`} className="mr-2 px-2 py-1 border border-gray-300 rounded">
-            Previous
+            Anterior
         </Link>) : null} 
 
 
-        <span className="mx-2">Page {page} of {totalPages}</span>
+        <span className="mx-2">Página {page} de {totalPages}</span>
         
           { page < totalPages ? (
         <Link  href={`/properties?page=${page+1}&pageSize=${pageSize}`} className="ml-2 px-2 py-1 border border-gray-300 rounded">
-            Next
+            Siguiente
         </Link>) : null} 
     </section> );
 }

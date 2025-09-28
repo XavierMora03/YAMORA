@@ -53,7 +53,7 @@ const PropertyDetails = ({property}) => {
           >
             <p>
               <FaBed className='inline-block mr-2'/> {property.beds}{' '}
-              <span className="hidden sm:inline">Camas</span>
+              <span className="hidden sm:inline">Habitaciones</span>
             </p>
             <p>
               <FaBath className='inline-block mr-2'/> {property.baths}{' '}

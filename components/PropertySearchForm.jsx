@@ -134,11 +134,11 @@ export default function PropertySearchForm() {
             <textarea
               className="w-full border rounded p-2"
               rows={3}
-              placeholder='Ej: "Busco un departamento romántico en Guadalajara cerca del Periférico, 2 recámaras, alberca, wifi, máximo $120 por noche"'
+              placeholder='Ej: "Busco un depa cerca del Cucei con 2 habitaciones"'
               value={aiPrompt}
               onChange={(e) => setAiPrompt(e.target.value)}
             />
-            <div className="text-xs text-gray-500 mt-1">Sé específico: camas, precio, amenidades, zona, ambiente.</div>
+            <div className="text-xs text-gray-500 mt-1">Sé específico: Habitaciones, precio, amenidades, zona, lugares cercanos.</div>
           </div>
         )}
       </form>

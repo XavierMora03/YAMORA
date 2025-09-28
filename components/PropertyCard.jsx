@@ -42,7 +42,7 @@ const PropertyCard = ({property}) => {
           <div className="flex justify-center gap-4 text-gray-500 mb-4">
             <p>
               <i className="fa-solid fa-bed"></i> <FaBed className="md:hidden lg:inline"/>{' '}{property.beds}{' '}
-              <span className="md:hidden lg:inline">Cuartos</span>
+              <span className="md:hidden lg:inline">Habitaciones</span>
             </p>
             <p>
               <FaBath className="md:hidden lg:inline"/>{' '}{property.baths}{' '}

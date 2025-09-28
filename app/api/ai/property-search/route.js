@@ -30,6 +30,7 @@ Detect common synonyms and simplify them to a single keyword:
 "cerca de escuela", "escuela" → "escuela"
 "balcón", "terraza" → "balcón"
 
+use rates.monthly as default if not specified, unless the user says rates.nightly or rates.weekly 
 Each word or concept must be searched in all text fields (name, description, amenities, location.city, location.state) using $regex and $options: "i". (NO EXCEPTIONS,SEARCH ALL TEXT FIELDS FOR EVERY KEY WORD)
 Each keyword will be an independent OR.
 For numeric filters (beds, baths, square_feet, rates), use $lt and $gt as appropriate.
