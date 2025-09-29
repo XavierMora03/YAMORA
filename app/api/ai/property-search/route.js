@@ -1,14 +1,17 @@
+// app/api/ai/property-search/route.js
 import { NextResponse } from "next/server";
 import connectDB from "@/config/database";
 import Property from "@/models/Property";
 
 const OPENAI_KEY = process.env.OPENAI_API_KEY;
-if (!OPENAI_KEY) {
-  console.warn("OPENAI_API_KEY not set in environment.");
-}
 
 export async function POST(req) {
   try {
+    if (!OPENAI_KEY) {
+      console.error("CRITICAL: OPENAI_API_KEY environment variable is not set.");
+      return NextResponse.json({ error: "Server configuration error: OpenAI API key missing." }, { status: 500 });
+    }
+
     const { prompt: userPrompt = "", limit: rawLimit = 12 } = await req.json();
     const limit = Math.max(1, Math.min(50, Number(rawLimit || 12)));
 
@@ -16,7 +19,7 @@ export async function POST(req) {
       return NextResponse.json({ error: "Falta el prompt del usuario" }, { status: 400 });
     }
 
-    await connectDB();
+    await connectDB(); // Ensure database connection
 
     const systemMessage = `
 You are a strict JSON generator for MongoDB Property searches.
@@ -47,13 +50,11 @@ User prompt:
 
 Expected output:
 
-
-
 {
   "type": { "$regex": "Apartamento", "$options": "i" },
   "rates.monthly": { "$lt": 15000 },
   "location.state": { "$regex": "CDMX", "$options": "i" },
-  "beds": 2 
+  "beds": 2,
   "$or": [
     { "name": { "$regex": "mascotas", "$options": "i" } },
     { "description": { "$regex": "mascotas", "$options": "i" } },
@@ -63,52 +64,73 @@ Expected output:
     { "amenities": { "$regex": "Alberca", "$options": "i" } },
     { "name": { "$regex": "ITESO", "$options": "i" } },
     { "description": { "$regex": "ITESO", "$options": "i" } },
-    { "amenities": { "$regex": "ITESO", "$options": "i" } },
-
+    { "amenities": { "$regex": "ITESO", "$options": "i" } }
   ]
 }
 `;
+    
+    console.log("[LOG] Sending request to OpenAI with prompt:", userPrompt);
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${OPENAI_KEY}`
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: "gpt-5-mini", // Changed to a valid and efficient model
         messages: [
           { role: "system", content: systemMessage },
           { role: "user", content: userPrompt }
         ],
-        temperature: 0
+        max_completion_tokens: 1000,
+        
+        response_format: { type: "json_object" } // Crucial for getting JSON back
       })
     });
 
-    const data = await response.json();
-    const jsonText = data?.choices?.[0]?.message?.content;
+    // --- IMPORTANT: Check for non-OK response first ---
+    if (!openaiResponse.ok) {
+      const errorDetail = await openaiResponse.text(); // Read the raw error body
+      console.error(`[ERROR] OpenAI API responded with status ${openaiResponse.status}:`, errorDetail);
+      throw new Error(`Error de la API de OpenAI (Código ${openaiResponse.status}): ${errorDetail.substring(0, 200)}...`); // Limit length
+    }
+
+    const openaiData = await openaiResponse.json();
+    console.log("[LOG] Raw OpenAI data received:", JSON.stringify(openaiData, null, 2));
+
+    const jsonText = openaiData?.choices?.[0]?.message?.content;
 
     if (!jsonText) {
-      throw new Error("No se recibió respuesta de ChatGPT");
+      console.error("[ERROR] OpenAI response did not contain expected message content:", openaiData);
+      throw new Error("La respuesta de OpenAI no contiene contenido de mensaje esperado.");
     }
+
+    console.log("[LOG] Content extracted from OpenAI (pre-parse):", jsonText);
 
     let filters;
     try {
       filters = JSON.parse(jsonText);
     } catch (err) {
-      console.error("Error parseando JSON de ChatGPT:", jsonText);
-      throw new Error("ChatGPT no devolvió JSON válido");
+      console.error("[ERROR] Error parseando JSON de OpenAI:", jsonText, err);
+      throw new Error("OpenAI no devolvió JSON válido.");
     }
+    
+    console.log("[LOG] Parsed filters:", JSON.stringify(filters, null, 2));
 
+    // Perform the database search
     const results = await Property.find(filters).limit(limit).lean();
+    console.log(`[LOG] Found ${results.length} properties with filters.`)
 
     return NextResponse.json({
-      parseSource: "chatgpt",
+      parseSource: "openia",
       parsedFilters: filters,
       results
     });
+
   } catch (err) {
-    console.error(err);
-    return NextResponse.json({ error: err.message || String(err) }, { status: 500 });
+    console.error("[CRITICAL ERROR] Error en la ruta de búsqueda AI de propiedades:", err);
+    // Ensure the frontend gets a readable error message
+    return NextResponse.json({ error: err.message || "Error interno del servidor en búsqueda AI" }, { status: 500 });
   }
 }
