@@ -110,14 +110,13 @@ export default function PropertySearchForm() {
                 value={propertyType}
                 onChange={(e) => setPropertyType(e.target.value)}
               >
-                <option value="All">Todas</option>
-                <option value="Apartment">Apartment</option>
-                <option value="Studio">Studio</option>
-                <option value="Condo">Condo</option>
-                <option value="House">House</option>
-                <option value="Cabin Or Cottage">Cabin Or Cottage</option>
-                <option value="Room">Room</option>
-                <option value="Other">Other</option>
+                <option value='Apartamento'>Apartamento</option>
+                <option value='Condominio'>Condominio</option>
+                <option value='Casa'>Casa</option>
+                <option value='Cabina'>Cabina</option>
+                <option value='Habitación'>Habitación</option>
+                <option value='Estudio'>Estudio</option>
+                <option value='Otro'>Otro</option>
               </select>
               <button
                 type="submit"
