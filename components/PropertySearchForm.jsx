@@ -132,7 +132,7 @@ export default function PropertySearchForm() {
                 ref={aiInputRef}
                 className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
                 rows={3}
-                placeholder='Ej: "Busco una casa cerca de Andares 2 habitaciones por menos de $25,000"'
+                placeholder='Ej: "Busco un depa amueblado cerca de CUCEI por menos de 13k"'
                 value={aiPrompt}
                 onChange={(e) => setAiPrompt(e.target.value)}
               />
