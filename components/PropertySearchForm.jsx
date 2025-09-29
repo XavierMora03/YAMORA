@@ -197,7 +197,7 @@ export default function PropertySearchForm() {
        
         {!loading && !items.length && !error && (
           <div className="text-gray-500 text-center p-8">
-            <p>Usa la búsqueda para encontrar tu próxima propiedad.</p>
+            {/* vacio */}
           </div>
         )}
       </div>
