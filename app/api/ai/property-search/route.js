@@ -83,7 +83,7 @@ Expected output:
           { role: "system", content: systemMessage },
           { role: "user", content: userPrompt }
         ],
-        max_completion_tokens: 1000,
+        max_completion_tokens: 3000,
         
         response_format: { type: "json_object" } // Crucial for getting JSON back
       })
