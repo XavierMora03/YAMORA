@@ -42,33 +42,8 @@ Remember the type values: Todas, Apartamento, Estudio, Condominio, Casa, Cabina,
 "depa", "departamento" → "Apartamento".
 Do not return any text, explanation, or code fences. Only return JSON.
 Use location filters only if it is an explicit city, state or zipcode, if it is not use name, description or amenities to search
-
-Example:
-
-User prompt:
-"quiero un depa pet friendly con alberca en CDMX, menos de 15000 mensual y 2 habitaciones, cerca del ITESO"
-
-Expected output:
-
-{
-  "type": { "$regex": "Apartamento", "$options": "i" },
-  "rates.monthly": { "$lt": 15000 },
-  "location.state": { "$regex": "CDMX", "$options": "i" },
-  "beds": 2,
-  "$or": [
-    { "name": { "$regex": "mascotas", "$options": "i" } },
-    { "description": { "$regex": "mascotas", "$options": "i" } },
-    { "amenities": { "$regex": "mascotas", "$options": "i" } },
-    { "name": { "$regex": "Alberca", "$options": "i" } },
-    { "description": { "$regex": "Alberca", "$options": "i" } },
-    { "amenities": { "$regex": "Alberca", "$options": "i" } },
-    { "name": { "$regex": "ITESO", "$options": "i" } },
-    { "description": { "$regex": "ITESO", "$options": "i" } },
-    { "amenities": { "$regex": "ITESO", "$options": "i" } }
-  ]
-}
 `;
-    
+
     console.log("[LOG] Sending request to OpenAI with prompt:", userPrompt);
 
     const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -78,22 +53,20 @@ Expected output:
         "Authorization": `Bearer ${OPENAI_KEY}`
       },
       body: JSON.stringify({
-        model: "gpt-5-mini", // Changed to a valid and efficient model
+        model: "gpt-4o-mini", // ✅ switched to chatgpt-4o-mini
         messages: [
           { role: "system", content: systemMessage },
           { role: "user", content: userPrompt }
         ],
         max_completion_tokens: 3000,
-        
         response_format: { type: "json_object" } // Crucial for getting JSON back
       })
     });
 
-    // --- IMPORTANT: Check for non-OK response first ---
     if (!openaiResponse.ok) {
-      const errorDetail = await openaiResponse.text(); // Read the raw error body
+      const errorDetail = await openaiResponse.text();
       console.error(`[ERROR] OpenAI API responded with status ${openaiResponse.status}:`, errorDetail);
-      throw new Error(`Error de la API de OpenAI (Código ${openaiResponse.status}): ${errorDetail.substring(0, 200)}...`); // Limit length
+      throw new Error(`Error de la API de OpenAI (Código ${openaiResponse.status}): ${errorDetail.substring(0, 200)}...`);
     }
 
     const openaiData = await openaiResponse.json();
@@ -118,19 +91,17 @@ Expected output:
     
     console.log("[LOG] Parsed filters:", JSON.stringify(filters, null, 2));
 
-    // Perform the database search
     const results = await Property.find(filters).limit(limit).lean();
-    console.log(`[LOG] Found ${results.length} properties with filters.`)
+    console.log(`[LOG] Found ${results.length} properties with filters.`);
 
     return NextResponse.json({
-      parseSource: "openia",
+      parseSource: "openai",
       parsedFilters: filters,
       results
     });
 
   } catch (err) {
     console.error("[CRITICAL ERROR] Error en la ruta de búsqueda AI de propiedades:", err);
-    // Ensure the frontend gets a readable error message
     return NextResponse.json({ error: err.message || "Error interno del servidor en búsqueda AI" }, { status: 500 });
   }
 }
