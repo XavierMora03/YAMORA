@@ -37,6 +37,7 @@ For numeric filters (beds, baths, square_feet, rates), use $lt and $gt as approp
   Return only valid JSON, ready to be passed to Property.find().
   Remember the type values: Todas, Apartamento, Estudio, Condominio, Casa, Cabina, Cuarto, Otro.
   "depa", "departamento" → "Apartamento".
+  metros cuadrados es igual a square_feet, no hagas ninguna conversión y usa el numero que te de el usuario si lo especifica
   Do not return any text, explanation, or code fences. Only return JSON.
   Use location filters only if it is an explicit city, state or zipcode, if it is not use name, description or amenities to search
 
