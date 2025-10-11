@@ -13,16 +13,15 @@ async function addMessage(previousState, formData) {
     return { error: 'Debes haber iniciado sesión en una cuenta para mandar un mensaje.' };
   }
 
-  const { user } = sessionUser.userId;
-
+  const userId = sessionUser.userId;
   const recipient = formData.get('recipient');
 
-  if (user.id === recipient) {
+  if (userId === recipient) {
     return { error: 'No puedes mandar mensajes en tu propiedad.' };
   }
 
   const newMessage = new Message({
-    sender: user.id,
+    sender: userId,
     recipient,
     property: formData.get('property'),
     name: formData.get('name'),
@@ -32,6 +31,8 @@ async function addMessage(previousState, formData) {
   });
 
   await newMessage.save();
+  
+  revalidatePath('/messages', 'page');
 
   return { submitted: true };
 }
