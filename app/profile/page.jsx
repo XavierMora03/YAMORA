@@ -9,7 +9,7 @@ const ProfilePage = async () => {
     await connectDB()
     const sessionUser = await getSessionUser();
 
-    const { userId } sessionUser.userId;
+    const { userId } = sessionUser.userId;
 
     
     const propertiesDocs = await Property.find({owner: userId}).lean()

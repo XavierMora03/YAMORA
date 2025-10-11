@@ -13,7 +13,7 @@ async function markMessageAsRead(messageId) {
     throw new Error('Se necesita un ID de usuario');
   }
 
-  const { userId } sessionUser.userId;
+  const { userId } = sessionUser.userId;
 
   const message = await Message.findById(messageId);
 

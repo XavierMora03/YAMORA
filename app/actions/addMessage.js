@@ -13,7 +13,7 @@ async function addMessage(previousState, formData) {
     return { error: 'Debes haber iniciado sesión en una cuenta para mandar un mensaje.' };
   }
 
-  const { user } sessionUser.userId;
+  const { user } = sessionUser.userId;
 
   const recipient = formData.get('recipient');
 

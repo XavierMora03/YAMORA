@@ -15,7 +15,7 @@ async function addProperty(formData) {
     throw new Error('Se necesita un ID de usuario');
   }
 
-  const { userId } sessionUser.userId;
+  const { userId } = sessionUser.userId;
 
   // Access all values for amenities and images
   const amenities = formData.getAll('amenities');
