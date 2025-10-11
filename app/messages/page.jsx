@@ -20,7 +20,7 @@ const MessagePage = async () => {
   await connectDB();
 
   const sessionUser = await getSessionUser();
-  const { userId } = sessionUser;
+  const userId = sessionUser.userId;
   console.log(userId);
 
   const readMessages = await Message.find({ recipient: userId, read: true })

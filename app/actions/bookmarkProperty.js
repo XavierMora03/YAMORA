@@ -15,7 +15,7 @@ async function bookmarkProperty(propertyId){
         throw new Error('Se necesita un ID de usuario')
     }
 
-    const {userId} = sessionUser;
+    const userId = sessionUser.userId;
 
     const user = await User.findById(userId);
 
