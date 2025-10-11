@@ -10,7 +10,7 @@ async function checkBookmarkStatus(propertyId) {
 
     const sessionUser = await getSessionUser();
 
-    if (!sessionUser || !sessionUser.userIdId){
+    if (!sessionUser || !sessionUser.userId){
         throw new Error('Se necesita un ID de usuario')
     }
 
