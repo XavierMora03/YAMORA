@@ -295,7 +295,7 @@ const PropertyEditForm = ({property}) =>{
                 type='checkbox'
                 id='amenity_coffee_maker'
                 name='amenities'
-                value='Coffee Maker'
+                value='Cafetera'
                 defaultChecked={property.amenities.includes('Cafetera')}
                 className='mr-2'
               />
