@@ -1,6 +1,5 @@
 import connectDB from '@/config/database';
 import User from '@/models/User';
-
 import GoogleProvider from 'next-auth/providers/google';
 
 export const authOptions = {
@@ -18,34 +17,47 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    // Invoked on successful signin
     async signIn({ profile }) {
-      // 1. Connect to database
-      await connectDB();
-      // 2. Check if user exists
-      const userExists = await User.findOne({ email: profile.email });
-      // 3. If not, then add user to database
-      if (!userExists) {
-        // Truncate user name if too long
-        const username = profile.name.slice(0, 20);
-
-        await User.create({
-          email: profile.email,
-          username,
-          image: profile.picture,
-        });
+      try {
+        await connectDB();
+        const userExists = await User.findOne({ email: profile.email });
+        
+        if (!userExists) {
+          const username = profile.name.slice(0, 20);
+          await User.create({
+            email: profile.email,
+            username,
+            image: profile.picture,
+          });
+        }
+        return true;
+      } catch (error) {
+        console.error('SignIn error:', error);
+        return false;
       }
-      // 4. Return true to allow sign in
-      return true;
     },
-    // Modifies the session object
-    async session({ session }) {
-      // 1. Get user from database
-      const user = await User.findOne({ email: session.user.email });
-      // 2. Assign the user id to the session
-      session.user.id = user._id.toString();
-      // 3. return session
+    
+    async session({ session, token }) {
+      // Use token data instead of querying database on every request
+      if (token && token.sub) {
+        session.user.id = token.sub;
+      }
       return session;
     },
+
+    async jwt({ token, user }) {
+      // token.sub is the user ID from NextAuth
+      if (user) {
+        token.sub = user.id;
+      }
+      return token;
+    },
+  },
+  
+  // Add these session config options
+  session: {
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // Update every 24 hours
   },
 };
