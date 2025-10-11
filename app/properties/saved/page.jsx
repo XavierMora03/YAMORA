@@ -3,7 +3,9 @@ import connectDB from "@/config/database";
 import User from "@/models/User";
 import { getSessionUser } from "@/utils/getSessionUser";
 const SavedPropertiesPage = async() => {
-    const userId = await getSessionUser();
+    
+    const sessionUser = await getSessionUser();
+    const userId = sessionUser.userId;
     
     const {bookmarks} = await User.findById(userId).populate('bookmarks');
 
