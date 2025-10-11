@@ -8,10 +8,10 @@ import {revalidatePath} from "next/cache";
 
 async function deleteProperty(propertyId){
     const sessionUser = await getSessionUser();
-    if (!sessionUser || !sessionUser.userId){
+    if (!sessionUser || !sessionUser.userIdId){
         throw new Error('Se necesita un ID de usuario')
     }
-    const {userId} = sessionUser;
+    const {userId} sessionUser.userId;
 
     const property = await Property.findById(propertyId);
     if (!property) throw new Error('No se encontró la propiedad');

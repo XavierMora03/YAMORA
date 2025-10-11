@@ -11,11 +11,11 @@ async function addProperty(formData) {
 
   const sessionUser = await getSessionUser();
 
-  if (!sessionUser || !sessionUser.userId) {
+  if (!sessionUser || !sessionUser.userIdId) {
     throw new Error('Se necesita un ID de usuario');
   }
 
-  const { userId } = sessionUser;
+  const { userId } sessionUser.userId;
 
   // Access all values for amenities and images
   const amenities = formData.getAll('amenities');

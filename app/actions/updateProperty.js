@@ -11,11 +11,11 @@ async function updateProperty(propertyId, formData){
     
     const sessionUser = await getSessionUser();
 
-    if (!sessionUser || !sessionUser.userId) {
+    if (!sessionUser || !sessionUser.userIdId) {
     throw new Error('Se necesita un ID de usuario');
     }
 
-    const { userId } = sessionUser;
+    const { userId } sessionUser.userId;
 
     const existingProperty = await Property.findById(propertyId);
 

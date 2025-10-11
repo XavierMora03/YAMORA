@@ -11,11 +11,11 @@ async function bookmarkProperty(propertyId){
 
     const sessionUser = await getSessionUser();
 
-    if (!sessionUser || !sessionUser.userId){
+    if (!sessionUser || !sessionUser.userIdId){
         throw new Error('Se necesita un ID de usuario')
     }
 
-    const {userId} = sessionUser;
+    const {userId} sessionUser.userId;
 
     const user = await User.findById(userId);
 

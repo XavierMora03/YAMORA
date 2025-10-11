@@ -9,11 +9,11 @@ async function addMessage(previousState, formData) {
 
   const sessionUser = await getSessionUser();
 
-  if (!sessionUser || !sessionUser.user) {
+  if (!sessionUser || !sessionUser.userId) {
     return { error: 'Debes haber iniciado sesión en una cuenta para mandar un mensaje.' };
   }
 
-  const { user } = sessionUser;
+  const { user } sessionUser.userId;
 
   const recipient = formData.get('recipient');
 

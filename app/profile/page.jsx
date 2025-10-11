@@ -9,7 +9,7 @@ const ProfilePage = async () => {
     await connectDB()
     const sessionUser = await getSessionUser();
 
-    const { userId } = sessionUser;
+    const { userId } sessionUser.userId;
 
     
     const propertiesDocs = await Property.find({owner: userId}).lean()
@@ -31,7 +31,7 @@ const ProfilePage = async () => {
               <div className="mb-4">
                 <img
                   className="h-32 w-32 md:h-48 md:w-48 rounded-full mx-auto md:mx-0"
-                  src={sessionUser.user.image  ||  profileDefault} 
+                  src={sessionUser.userId.image  ||  profileDefault} 
                   width={200}
                   height={200}
                   alt="User"
@@ -39,10 +39,10 @@ const ProfilePage = async () => {
               </div>
 
               <h2 className="text-2xl mb-4">
-                <span className="font-bold block">Nombre: </span> {sessionUser.user.name}
+                <span className="font-bold block">Nombre: </span> {sessionUser.userId.name}
               </h2>
               <h2 className="text-2xl">
-                <span className="font-bold block">Correo: </span> {sessionUser.user.email}
+                <span className="font-bold block">Correo: </span> {sessionUser.userId.email}
               </h2>
             </div>
 
