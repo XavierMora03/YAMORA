@@ -10,11 +10,11 @@ async function deleteMessage(messageId) {
 
   const sessionUser = await getSessionUser();
 
-  if (!sessionUser || !sessionUser.user) {
+  if (!sessionUser || !sessionUser.userId) {
     throw new Error('Se necesita un ID de usuario');
   }
 
-  const { userId } = sessionUser;
+  const userId = sessionUser.userId;
 
   const message = await Message.findById(messageId);
 

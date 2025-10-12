@@ -15,7 +15,7 @@ async function updateProperty(propertyId, formData){
     throw new Error('Se necesita un ID de usuario');
     }
 
-    const { userId } = sessionUser;
+    const userId = sessionUser.userId;
 
     const existingProperty = await Property.findById(propertyId);
 
