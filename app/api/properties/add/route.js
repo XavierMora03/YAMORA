@@ -1,38 +1,48 @@
-'use server';
+import { NextResponse } from 'next/server';
 import connectDB from '@/config/database';
 import Property from '@/models/Property';
-import { getSessionUser } from '@/utils/getSessionUser';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/utils/authOptions';
 import cloudinary from '@/config/cloudinary';
 
-async function addProperty(formData) {
+export async function POST(req) {
   try {
-    console.log('addProperty: Starting');
-    
-    await connectDB();
-    const sessionUser = await getSessionUser();
+    console.log('API: POST /api/properties/add');
 
-    if (!sessionUser?.userId) {
-      throw new Error('Usuario no autenticado');
+    const session = await getServerSession(authOptions);
+    console.log('API: Session:', session?.user?.email);
+    
+    if (!session?.user?.id) {
+      console.log('API: No session user ID');
+      return NextResponse.json(
+        { error: 'No autenticado' },
+        { status: 401 }
+      );
     }
 
-    const userId = sessionUser.userId;
+    await connectDB();
+
+    const formData = await req.formData();
+    const userId = session.user.id;
+
     const amenities = formData.getAll('amenities') || [];
     const images = (formData.getAll('images') || []).filter(img => img?.name);
 
     if (images.length === 0) {
-      throw new Error('Debes seleccionar al menos una imagen');
+      return NextResponse.json(
+        { error: 'Debes seleccionar al menos una imagen' },
+        { status: 400 }
+      );
     }
 
-    console.log('addProperty: Uploading images');
+    console.log('API: Uploading images');
     const imageUrls = [];
 
     for (let i = 0; i < images.length; i++) {
       try {
         const buffer = await images[i].arrayBuffer();
         const b64 = Buffer.from(buffer).toString('base64');
-        
+
         const result = await cloudinary.uploader.upload(
           `data:image/png;base64,${b64}`,
           { folder: 'yamora', timeout: 60000 }
@@ -40,11 +50,15 @@ async function addProperty(formData) {
 
         imageUrls.push(result.secure_url);
       } catch (uploadErr) {
-        throw new Error(`Error subiendo imagen ${i + 1}`);
+        console.error(`Image ${i + 1} error:`, uploadErr.message);
+        return NextResponse.json(
+          { error: `Error subiendo imagen ${i + 1}` },
+          { status: 500 }
+        );
       }
     }
 
-    console.log('addProperty: Creating property document');
+    console.log('API: Creating property');
 
     const propertyData = {
       type: formData.get('type'),
@@ -78,18 +92,19 @@ async function addProperty(formData) {
     await newProperty.save();
 
     const propertyId = newProperty._id.toString();
-    console.log('addProperty: Property created, redirecting');
+    console.log('API: Property created:', propertyId);
 
-    revalidatePath('/', 'layout');
-    
-    // Use redirect() which Next.js handles specially
-    redirect(`/properties/${propertyId}`);
+    return NextResponse.json({
+      success: true,
+      propertyId: propertyId,
+      message: 'Propiedad creada exitosamente'
+    });
 
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Error desconocido';
-    console.error('addProperty error:', message);
-    throw error;
+    console.error('API error:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Error desconocido' },
+      { status: 500 }
+    );
   }
 }
-
-export default addProperty;
