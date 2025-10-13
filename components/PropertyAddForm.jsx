@@ -12,29 +12,51 @@ const PropertyAddForm = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      console.log('Submitting property form...');
+      console.log('=== Form Submit Start ===');
 
       const formElement = e.currentTarget;
       const formData = new FormData(formElement);
 
+      console.log('Calling addProperty server action...');
       const response = await addProperty(formData);
       
-      console.log('Response from server:', response);
+      console.log('✓ Response received from server:', response);
+      console.log('  - Success:', response?.success);
+      console.log('  - Property ID:', response?.propertyId);
+      console.log('  - Error:', response?.error);
 
-      if (response.success) {
-        toast.success(response.message || 'Propiedad creada exitosamente');
-        console.log('Redirecting to property page:', `/properties/${response.propertyId}`);
-        router.push(`/properties/${response.propertyId}`);
+      if (!response) {
+        throw new Error('No response from server');
+      }
+
+      if (response.success && response.propertyId) {
+        const successMsg = response.message || 'Propiedad creada exitosamente';
+        console.log('✓ Success! Message:', successMsg);
+        toast.success(successMsg);
+        
+        const redirectUrl = `/properties/${response.propertyId}`;
+        console.log('→ Redirecting to:', redirectUrl);
+        
+        // Use setTimeout to ensure toast is shown before redirect
+        setTimeout(() => {
+          router.push(redirectUrl);
+        }, 500);
+      } else if (response.error) {
+        const errorMsg = response.error || 'Error al crear la propiedad';
+        console.error('✗ Server error:', errorMsg);
+        toast.error(errorMsg);
       } else {
-        toast.error(response.error || 'Error al crear la propiedad');
-        console.error('Error response:', response.error);
+        console.error('✗ Unexpected response format:', response);
+        throw new Error('Respuesta inesperada del servidor');
       }
     } catch (error) {
-      const errorMsg = error instanceof Error ? error.message : 'Error desconocido';
-      console.error('Error submitting form:', error);
-      toast.error(errorMsg);
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      console.error('✗ Error submitting form:', errorMsg);
+      console.error('Full error object:', error);
+      toast.error(errorMsg || 'Error desconocido al procesar el formulario');
     } finally {
       setIsLoading(false);
+      console.log('=== Form Submit End ===');
     }
   };
 
