@@ -1,9 +1,45 @@
 'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 import addProperty from '@/app/actions/addProperty';
 
 const PropertyAddForm = () => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true);
+      console.log('Submitting property form...');
+
+      const formElement = e.currentTarget;
+      const formData = new FormData(formElement);
+
+      const response = await addProperty(formData);
+      
+      console.log('Response from server:', response);
+
+      if (response.success) {
+        toast.success(response.message || 'Propiedad creada exitosamente');
+        console.log('Redirecting to property page:', `/properties/${response.propertyId}`);
+        router.push(`/properties/${response.propertyId}`);
+      } else {
+        toast.error(response.error || 'Error al crear la propiedad');
+        console.error('Error response:', response.error);
+      }
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : 'Error desconocido';
+      console.error('Error submitting form:', error);
+      toast.error(errorMsg);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <form action={addProperty}>
+    <form onSubmit={handleSubmit}>
       <h2 className='text-3xl text-center font-semibold mb-6'>Añadir propiedad</h2>
 
       <div className='mb-4'>
@@ -15,6 +51,7 @@ const PropertyAddForm = () => {
           name='type'
           className='border rounded w-full py-2 px-3'
           required
+          disabled={isLoading}
         >
           <option value='Apartamento'>Apartamento</option>
           <option value='Condominio'>Condominio</option>
@@ -36,6 +73,7 @@ const PropertyAddForm = () => {
           className='border rounded w-full py-2 px-3 mb-2'
           placeholder='ej. Bonito departamento en Tlajomulco.'
           required
+          disabled={isLoading}
         />
       </div>
       <div className='mb-4'>
@@ -51,6 +89,7 @@ const PropertyAddForm = () => {
           className='border rounded w-full py-2 px-3'
           rows='4'
           placeholder='Añade una descripción para tu propiedad'
+          disabled={isLoading}
         ></textarea>
       </div>
 
@@ -63,6 +102,7 @@ const PropertyAddForm = () => {
           className='border rounded w-full py-2 px-3 mb-2'
           placeholder='Calle'
           required
+          disabled={isLoading}
         />
         <input
           type='text'
@@ -71,6 +111,7 @@ const PropertyAddForm = () => {
           className='border rounded w-full py-2 px-3 mb-2'
           placeholder='Ciudad'
           required
+          disabled={isLoading}
         />
         <input
           type='text'
@@ -79,6 +120,7 @@ const PropertyAddForm = () => {
           className='border rounded w-full py-2 px-3 mb-2'
           placeholder='Estado'
           required
+          disabled={isLoading}
         />
         <input
           type='text'
@@ -86,6 +128,7 @@ const PropertyAddForm = () => {
           name='location.zipcode'
           className='border rounded w-full py-2 px-3 mb-2'
           placeholder='Código postal'
+          disabled={isLoading}
         />
       </div>
 
@@ -100,6 +143,7 @@ const PropertyAddForm = () => {
             name='beds'
             className='border rounded w-full py-2 px-3'
             required
+            disabled={isLoading}
           />
         </div>
         <div className='w-full sm:w-1/3 px-2'>
@@ -112,6 +156,7 @@ const PropertyAddForm = () => {
             name='baths'
             className='border rounded w-full py-2 px-3'
             required
+            disabled={isLoading}
           />
         </div>
         <div className='w-full sm:w-1/3 pl-2'>
@@ -127,6 +172,7 @@ const PropertyAddForm = () => {
             name='square_feet'
             className='border rounded w-full py-2 px-3'
             required
+            disabled={isLoading}
           />
         </div>
       </div>
@@ -141,6 +187,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Wifi'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_wifi'>Wifi</label>
           </div>
@@ -151,6 +198,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Estufa'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_kitchen'>Estufa</label>
           </div>
@@ -161,6 +209,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Lavadora'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_washer_dryer'>Lavadora</label>
           </div>
@@ -171,6 +220,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Estacionamiento'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_free_parking'>Estacionamiento</label>
           </div>
@@ -181,6 +231,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Alberca'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_pool'>Alberca</label>
           </div>
@@ -191,6 +242,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Jacuzzi'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_hot_tub'>Jacuzzi</label>
           </div>
@@ -201,6 +253,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Seguridad 24/7'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_24_7_security'>Seguridad 24/7</label>
           </div>
@@ -211,6 +264,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Acceso para silla de ruedas'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_wheelchair_accessible'>
               Acceso para silla de ruedas
@@ -223,6 +277,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Elevador'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_elevator_access'>Elevador</label>
           </div>
@@ -233,6 +288,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Lavavajillas'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_dishwasher'>Lavavajillas</label>
           </div>
@@ -243,6 +299,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Gym'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_gym_fitness_center'>
               Gym
@@ -255,6 +312,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Aire acondicionado'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_air_conditioning'>Aire acondicionado</label>
           </div>
@@ -265,6 +323,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Balcón'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_balcony_patio'>Balcón</label>
           </div>
@@ -275,6 +334,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Smart TV'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_smart_tv'>Smart TV</label>
           </div>
@@ -285,6 +345,7 @@ const PropertyAddForm = () => {
               name='amenities'
               value='Cafetera'
               className='mr-2'
+              disabled={isLoading}
             />
             <label htmlFor='amenity_coffee_maker'>Cafetera</label>
           </div>
@@ -305,6 +366,7 @@ const PropertyAddForm = () => {
               id='weekly_rate'
               name='rates.weekly'
               className='border rounded w-full py-2 px-3'
+              disabled={isLoading}
             />
           </div>
           <div className='flex items-center'>
@@ -316,6 +378,7 @@ const PropertyAddForm = () => {
               id='monthly_rate'
               name='rates.monthly'
               className='border rounded w-full py-2 px-3'
+              disabled={isLoading}
             />
           </div>
           <div className='flex items-center'>
@@ -327,6 +390,7 @@ const PropertyAddForm = () => {
               id='nightly_rate'
               name='rates.nightly'
               className='border rounded w-full py-2 px-3'
+              disabled={isLoading}
             />
           </div>
         </div>
@@ -345,6 +409,7 @@ const PropertyAddForm = () => {
           name='seller_info.name'
           className='border rounded w-full py-2 px-3'
           placeholder='Name'
+          disabled={isLoading}
         />
       </div>
       <div className='mb-4'>
@@ -361,6 +426,7 @@ const PropertyAddForm = () => {
           className='border rounded w-full py-2 px-3'
           placeholder='Email address'
           required
+          disabled={isLoading}
         />
       </div>
       <div className='mb-4'>
@@ -376,6 +442,7 @@ const PropertyAddForm = () => {
           name='seller_info.phone'
           className='border rounded w-full py-2 px-3'
           placeholder='Phone'
+          disabled={isLoading}
         />
       </div>
 
@@ -391,15 +458,17 @@ const PropertyAddForm = () => {
           accept='image/*'
           multiple
           required
+          disabled={isLoading}
         />
       </div>
 
       <div>
         <button
-          className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline'
+          className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline disabled:opacity-50 disabled:cursor-not-allowed'
           type='submit'
+          disabled={isLoading}
         >
-          Añadir propiedad
+          {isLoading ? 'Añadiendo propiedad...' : 'Añadir propiedad'}
         </button>
       </div>
     </form>

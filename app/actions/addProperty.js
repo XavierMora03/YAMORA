@@ -1,10 +1,8 @@
-
 'use server';
 import connectDB from '@/config/database';
 import Property from '@/models/Property';
 import { getSessionUser } from '@/utils/getSessionUser';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import cloudinary from '@/config/cloudinary';
 
 async function addProperty(formData) {
@@ -18,7 +16,10 @@ async function addProperty(formData) {
     console.log('✓ Session user retrieved:', sessionUser?.userId);
 
     if (!sessionUser || !sessionUser.userId) {
-      throw new Error('Se necesita un ID de usuario');
+      return { 
+        success: false,
+        error: 'Se necesita un ID de usuario'
+      };
     }
 
     const userId = sessionUser.userId;
@@ -30,7 +31,10 @@ async function addProperty(formData) {
     console.log(`✓ Found ${images.length} images and ${amenities.length} amenities`);
 
     if (images.length === 0) {
-      throw new Error('Debes seleccionar al menos una imagen');
+      return { 
+        success: false,
+        error: 'Debes seleccionar al menos una imagen'
+      };
     }
 
     console.log('⏳ Uploading images to Cloudinary...');
@@ -66,7 +70,10 @@ async function addProperty(formData) {
       } catch (uploadError) {
         const errorMsg = uploadError instanceof Error ? uploadError.message : String(uploadError);
         console.error(`✗ Error uploading image ${i + 1}:`, errorMsg);
-        throw new Error(`Failed to upload image ${i + 1}: ${errorMsg}`);
+        return {
+          success: false,
+          error: `Error subiendo imagen ${i + 1}: ${errorMsg}`
+        };
       }
     }
 
@@ -119,15 +126,15 @@ async function addProperty(formData) {
     revalidatePath('/', 'layout');
     console.log('✓ Cache revalidated');
 
-    console.log('🔄 Redirecting to property page...');
-    redirect(`/properties/${newProperty._id}`);
+    console.log('✓ Property created successfully!');
+    
+    return {
+      success: true,
+      propertyId: newProperty._id.toString(),
+      message: 'Propiedad creada exitosamente'
+    };
     
   } catch (error) {
-    // NEXT_REDIRECT is not a real error, it's how Next.js handles redirects
-    if (error instanceof Error && error.message === 'NEXT_REDIRECT') {
-      throw error;
-    }
-
     const errorMessage = error instanceof Error ? error.message : String(error);
     const errorStack = error instanceof Error ? error.stack : '';
     
@@ -137,7 +144,10 @@ async function addProperty(formData) {
     console.error('Full error:', error);
     console.error('=========================');
     
-    throw error;
+    return {
+      success: false,
+      error: errorMessage || 'Error desconocido al crear la propiedad'
+    };
   }
 }
 
