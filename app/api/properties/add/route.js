@@ -35,20 +35,26 @@ export async function POST(req) {
       );
     }
 
-    console.log('API: Uploading images');
+    console.log(`API: Uploading ${images.length} images`);
     const imageUrls = [];
 
     for (let i = 0; i < images.length; i++) {
       try {
         const buffer = await images[i].arrayBuffer();
         const b64 = Buffer.from(buffer).toString('base64');
+        const mimeType = images[i].type || 'image/png';
 
         const result = await cloudinary.uploader.upload(
-          `data:image/png;base64,${b64}`,
-          { folder: 'yamora', timeout: 60000 }
+          `data:${mimeType};base64,${b64}`,
+          { 
+            folder: 'yamora',
+            timeout: 60000,
+            resource_type: 'auto'
+          }
         );
 
         imageUrls.push(result.secure_url);
+        console.log(`API: Image ${i + 1} uploaded`);
       } catch (uploadErr) {
         console.error(`Image ${i + 1} error:`, uploadErr.message);
         return NextResponse.json(
@@ -58,7 +64,7 @@ export async function POST(req) {
       }
     }
 
-    console.log('API: Creating property');
+    console.log('API: All images uploaded, creating property');
 
     const propertyData = {
       type: formData.get('type'),
@@ -70,19 +76,19 @@ export async function POST(req) {
         state: formData.get('location.state'),
         zipcode: formData.get('location.zipcode'),
       },
-      beds: formData.get('beds'),
-      baths: formData.get('baths'),
-      square_feet: formData.get('square_feet'),
+      beds: parseInt(formData.get('beds')) || 0,
+      baths: parseInt(formData.get('baths')) || 0,
+      square_feet: parseInt(formData.get('square_feet')) || 0,
       amenities,
       rates: {
-        weekly: formData.get('rates.weekly'),
-        monthly: formData.get('rates.monthly'),
-        nightly: formData.get('rates.nightly'),
+        weekly: parseFloat(formData.get('rates.weekly')) || 0,
+        monthly: parseFloat(formData.get('rates.monthly')) || 0,
+        nightly: parseFloat(formData.get('rates.nightly')) || 0,
       },
       seller_info: {
-        name: formData.get('seller_info.name'),
-        email: formData.get('seller_info.email'),
-        phone: formData.get('seller_info.phone'),
+        name: formData.get('seller_info.name') || '',
+        email: formData.get('seller_info.email') || '',
+        phone: formData.get('seller_info.phone') || '',
       },
       images: imageUrls,
       owner: userId,
