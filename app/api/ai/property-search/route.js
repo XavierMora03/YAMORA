@@ -19,7 +19,6 @@ export async function POST(req) {
     await connectDB();
 
     const systemMessage = `
-`
 You are a strict JSON generator for MongoDB Property searches.
 Use only fields from the Property schema:
 name, description, type, location.city, location.state, location.zipcode, beds, baths, square_feet, amenities, rates.nightly, rates.weekly, rates.monthly, is_featured.
@@ -85,7 +84,6 @@ Expected output:
     { "amenities": { "$regex": "ITESO", "$options": "i" } }
   ]
 }
-  `
   `;
 
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
