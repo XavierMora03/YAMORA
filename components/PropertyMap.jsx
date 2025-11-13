@@ -54,7 +54,7 @@ const PropertyMap = ({property}) => {
         fetchCoords();
     },[]);
     if(loading) return <Spinner/>
-    if(geocodeError) return <h3>No se encontró la ubicación.</h3>
+    if(geocodeError) { console.error(geocodeError); return <h3>No se encontró la ubicación.</h3>} 
     return ( !loading && (
     <Map mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
       initialViewState={{
